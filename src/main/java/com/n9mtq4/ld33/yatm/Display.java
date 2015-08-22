@@ -135,7 +135,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		if (DEBUG) {
 			g.setColor(new Color(255, 255, 0));
-			g.setFont(new Font("Verdana", Font.BOLD, 36));
+			g.setFont(new Font("Verdana", Font.BOLD, 24));
 			g.drawString(String.valueOf(fps + " fps"), 0, HEIGHT - 18);
 			g.setFont(new Font("Verdana", Font.BOLD, 12));
 		}
