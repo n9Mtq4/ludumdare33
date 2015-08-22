@@ -18,7 +18,8 @@ package com.n9mtq4.ld33.yatm;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
-import com.n9mtq4.ld33.yatm.level.LevelManager;
+import com.n9mtq4.ld33.yatm.input.KeyBoard;
+import com.n9mtq4.ld33.yatm.level.Level;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -29,7 +30,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by will on 8/21/15 at 9:03 PM.
  */
-public class Display extends Canvas implements Runnable, KeyListener, MouseListener, MouseMotionListener {
+public class Display extends Canvas implements Runnable, MouseListener, MouseMotionListener {
 	
 	public static final int WIDTH = 720;
 	public static final int HEIGHT = (WIDTH / 16) * 9; // 16:9
@@ -43,8 +44,9 @@ public class Display extends Canvas implements Runnable, KeyListener, MouseListe
 	
 	private Screen screen;
 	private Hud hud;
-	private LevelManager levelManager;
+	public Level level;
 	private Player player;
+	private KeyBoard keyBoard;
 	private Progress progress;
 	
 	public Display() {
@@ -53,13 +55,16 @@ public class Display extends Canvas implements Runnable, KeyListener, MouseListe
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 		setPreferredSize(size);
 		this.screen = new Screen(WIDTH, HEIGHT);
-		initListeners();
 		
+		
+		
+		initListeners();
 		initBuffer();
 	}
 	
 	private void initListeners() {
-		addKeyListener(this);
+		this.keyBoard = new KeyBoard();
+		addKeyListener(keyBoard);
 		addMouseListener(this);
 		addMouseMotionListener(this);
 	}
@@ -68,6 +73,7 @@ public class Display extends Canvas implements Runnable, KeyListener, MouseListe
 		
 		if (thread != null) stop();
 		running = true;
+		initBuffer();
 		thread = new Thread(this, "Game Thread");
 		thread.start();
 		
@@ -124,7 +130,7 @@ public class Display extends Canvas implements Runnable, KeyListener, MouseListe
 	
 	public void tick() {
 		
-		
+		level.tick();
 		
 	}
 	
@@ -197,21 +203,6 @@ public class Display extends Canvas implements Runnable, KeyListener, MouseListe
 	
 	public static int getWindowHeight() {
 		return HEIGHT * SCALE;
-	}
-	
-	@Override
-	public void keyTyped(KeyEvent e) {
-		
-	}
-	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-	}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
 	}
 	
 	@Override

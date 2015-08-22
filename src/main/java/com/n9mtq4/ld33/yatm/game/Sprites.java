@@ -17,6 +17,7 @@ package com.n9mtq4.ld33.yatm.game;
 
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
+import com.n9mtq4.ld33.yatm.graphics.SpriteSheet;
 
 import java.awt.Color;
 
@@ -24,6 +25,14 @@ import java.awt.Color;
  * Created by will on 8/21/15 at 10:52 PM.
  */
 public class Sprites {
+	
+	public static final SpriteSheet monster1 = new SpriteSheet("/textures/playerSheet.png", 8);
+	
+	static {
+		for (int y = 0; y < 5; y++) {
+			
+		}
+	}
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(0, 0, 0));
 	

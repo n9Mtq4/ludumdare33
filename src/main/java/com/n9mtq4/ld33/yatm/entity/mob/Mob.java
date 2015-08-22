@@ -24,7 +24,7 @@ import com.n9mtq4.ld33.yatm.level.Level;
  */
 public class Mob extends Entity {
 	
-	public int dir = 0;
+	public Direction dir = Direction.FORWARD;
 	public boolean moving = false;
 	
 	private Player player;
@@ -70,10 +70,10 @@ public class Mob extends Entity {
 			return;
 		}
 		
-		if (xd > 0) dir = 1;
-		if (xd < 0) dir = 3;
-		if (yd > 0) dir = 2;
-		if (yd < 0) dir = 0;
+		if (xd > 0) dir = Direction.RIGHT;
+		if (xd < 0) dir = Direction.LEFT;
+		if (yd > 0) dir = Direction.BACKWARDS;
+		if (yd < 0) dir = Direction.FORWARD;
 		
 		if (!collision(xd, yd)) {
 			x += xd;

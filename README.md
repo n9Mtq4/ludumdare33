@@ -6,6 +6,12 @@ Tools used / will be used:
  - GarageBand
  - Audacity
 
+-----------------------------
+Things to do
+ - lighting
+ - cut scene manager
+ - music
+ - line of sight alg
 
 -----------------------------
 ##Brainstorm area

@@ -13,42 +13,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity;
+package com.n9mtq4.ld33.yatm.input;
 
-import com.n9mtq4.ld33.yatm.graphics.Screen;
-import com.n9mtq4.ld33.yatm.graphics.Sprite;
-import com.n9mtq4.ld33.yatm.level.Level;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
- * Created by will on 4/18/15 at 2:58 PM.
+ * Created by will on 8/21/15 at 11:12 PM.
  */
-public abstract class Entity {
+public class KeyBoard implements KeyListener {
 	
-	public int x;
-	public int y;
-	public boolean removed = false;
-	public Level level;
-	protected Sprite sprite;
+	private boolean[] keys = new boolean[180]; // 128 keys
+	public boolean up, down, left, right;
 	
-	public void init(Level level) {
-		this.level = level;
+	public boolean hasKeyBeenPressed(int keyCode) {
+		return keys[keyCode];
 	}
 	
-	public void render(Screen screen) {
+	public void update() {
+		
+		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
+		down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
+		left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
+		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		
 	}
 	
-	public void tick() {
+	@Override
+	public void keyTyped(KeyEvent keyEvent) {
 		
 	}
 	
-	public void remove() {
-		removed = true;
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+		keys[keyEvent.getKeyCode()] = true;
 	}
 	
-	public boolean isRemoved() {
-		return removed;
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+		keys[keyEvent.getKeyCode()] = false;
 	}
-	
 	
 }

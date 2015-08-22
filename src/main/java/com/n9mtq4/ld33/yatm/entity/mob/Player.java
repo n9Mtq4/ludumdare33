@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.entity.mob;
 
 import com.n9mtq4.ld33.yatm.Display;
+import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
 
@@ -26,10 +27,10 @@ public class Player extends Mob {
 	
 	public Display display;
 	
-	public Sprite forward;
-	public Sprite backwards;
-	public Sprite left;
-	public Sprite right;
+	public AnimatedSprite forward;
+	public AnimatedSprite backwards;
+	public AnimatedSprite left;
+	public AnimatedSprite right;
 	
 	public Player(int x, int y, Display display) {
 		
@@ -42,13 +43,13 @@ public class Player extends Mob {
 	
 	@Override
 	public void render(Screen screen) {
-		if (dir == 0) {
+		if (Direction.FORWARD.equals(dir)) {
 			screen.renderSpriteRel(x, y, forward);
-		}else if (dir == 1) {
+		}else if (Direction.RIGHT.equals(dir)) {
 			screen.renderSpriteRel(x, y, right);
-		}else if (dir == 2) {
+		}else if (Direction.BACKWARDS.equals(dir)) {
 			screen.renderSpriteRel(x, y, backwards);
-		}else if (dir == 3) {
+		}else if (Direction.LEFT.equals(dir)) {
 			screen.renderSpriteRel(x, y, left);
 		}
 	}
@@ -56,6 +57,10 @@ public class Player extends Mob {
 	@Override
 	public void tick() {
 		super.tick();
+		forward.tick();
+		backwards.tick();
+		left.tick();
+		right.tick();
 	}
 	
 }

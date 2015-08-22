@@ -13,14 +13,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.level;
+package com.n9mtq4.ld33.yatm.entity.mob;
 
 /**
- * Created by will on 8/21/15 at 9:50 PM.
+ * Created by will on 8/21/15 at 11:01 PM.
  */
-public class LevelManager {
+public enum Direction {
 	
-	public int currentLevel;
-	public Level[] levels;
+	FORWARD, BACKWARDS, LEFT, RIGHT
 	
 }

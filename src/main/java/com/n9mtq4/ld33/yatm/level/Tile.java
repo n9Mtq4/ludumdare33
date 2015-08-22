@@ -15,11 +15,10 @@
 
 package com.n9mtq4.ld33.yatm.level;
 
+import com.n9mtq4.ld33.yatm.entity.Entity;
 import com.n9mtq4.ld33.yatm.entity.mob.Mob;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
-
-import javax.swing.text.html.parser.Entity;
 
 /**
  * Created by will on 8/21/15 at 9:29 PM.
