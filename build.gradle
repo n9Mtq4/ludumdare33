@@ -10,7 +10,7 @@ repositories {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'INSERTMAINCLASSHERE'
+        attributes 'Main-Class': 'com.n9mtq4.ld33.yatm.game.YouAreTheMonster'
     }
 }
 
