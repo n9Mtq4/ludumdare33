@@ -25,13 +25,15 @@ import com.n9mtq4.ld33.yatm.graphics.Sprite;
  */
 public class Tile {
 	
-	public int x;
-	public int y;
+//	public int x;
+//	public int y;
+	
 	public Sprite sprite;
 	
 	public Tile(Sprite sprite) {
 		this.sprite = sprite;
 	}
+	
 	public void render(int x, int y, Screen screen) {
 		screen.renderTile(x << Screen.TILE_SIZE, y << Screen.TILE_SIZE, this);
 	}
@@ -42,6 +44,10 @@ public class Tile {
 	
 	public boolean isSolid(Entity entity) {
 		return false;
+	}
+	
+	public double getSourceLight() {
+		return 0.0d;
 	}
 	
 }

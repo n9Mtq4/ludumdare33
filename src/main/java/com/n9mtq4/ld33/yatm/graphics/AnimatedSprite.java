@@ -31,14 +31,16 @@ public class AnimatedSprite extends Sprite {
 		this.frame = 0;
 		this.frameRate = frameRate;
 		this.frameTick = 0;
+		System.out.println(frames[0].equals(frames[1]));
 	}
 	
 	@Override
 	public void tick() {
 		if (frameTick - frameRate == 0) {
 			frameTick = 0;
-			frame = frame < frames.length ? frame++ : 0; //TODO: will this work?
+			frame = frame < frames.length - 1 ? frame + 1 : 0;
 		}
+		frameTick++;
 	}
 	
 	@Override

@@ -15,6 +15,10 @@
 
 package com.n9mtq4.ld33.yatm.game;
 
+import com.n9mtq4.ld33.yatm.Display;
+
+import javax.swing.*;
+
 /**
  * Created by will on 8/21/15 at 9:35 PM.
  */
@@ -22,7 +26,19 @@ public class YouAreTheMonster {
 	
 	public static void main(String[] args) {
 		
+		JFrame frame = new JFrame("Game");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		Display game = new Display();
+		
+		frame.add(game);
+		
+		frame.setResizable(false);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		game.start();
 		
 	}
 	

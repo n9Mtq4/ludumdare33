@@ -33,15 +33,14 @@ public class Level {
 	public int width;
 	public int height;
 	public int[] tiles;
-	public int[] tilesInt;
-	public int score = 0;
+	public double[] lightMap;
+	public double darkness = 0.2d;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
 	
 	public Level(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.tilesInt = new int[width * height];
 		generateLevel();
 	}
 	
@@ -59,7 +58,63 @@ public class Level {
 		entities.remove(entity);
 	}
 	
+	public void generateLightMap() {
+		lightMap = new double[width * height];
+		updateLightMap();
+	}
+	
+	public void updateLightMap() {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+//				set source light
+				lightMap[x + y * width] += getTile(x, y).getSourceLight();
+//				now calculate how the light travels
+				computeAdjacentLight(x, y);
+			}
+		}
+	}
+	
+	/**
+	 * recursive function that calculates light adjacent to tiles.<br>
+	 * wow, this code gives me a headache just looking at it.
+	 * if it doesn't work, debugging this is going to suck :(
+	 * */
+	private void computeAdjacentLight(int x, int y) {
+//		remember edges! we shouldn't throw an IndexOutOfBounds!
+		double centerLight = lightMap[x + y * width];
+//		add the center light to the ones around it, but subtract the darkness level
+//		top row
+		if (x > 0 && y > 0) lightMap[(x - 1) + (y - 1) * width] += centerLight - darkness;
+		if (y > 0) lightMap[x + (y - 1) * width] += centerLight - darkness;
+		if (x < width && y > 0) lightMap[(x + 1) + (y - 1) * width] += centerLight - darkness;
+//		middle row
+		if (x > 0) lightMap[(x - 1) + y * width] += centerLight - darkness;
+//		don't include the original tile
+		if (x < width) lightMap[(x + 1) + y * width] += centerLight - darkness;
+//		bottom row
+		if (x > 0 && y < height) lightMap[(x - 1) + (y + 1) * width] += centerLight - darkness;
+		if (y < height) lightMap[x + (y + 1) * width] += centerLight - darkness;
+		if (x < width && y < height) lightMap[(x + 1) + (y + 1) * width] += centerLight - darkness;
+		
+//		now, go over those changed lights and see if any have more light than darkness level
+//		if so, compute their adjacent light levels!
+//		top row
+		if (x > 0 && y > 0) if (lightMap[(x - 1) + (y - 1) * width] > darkness) computeAdjacentLight(x - 1, y - 1);
+		if (y > 0) if (lightMap[x + (y - 1) * width] > darkness) computeAdjacentLight(x, y - 1);
+		if (x < width && y > 0) if (lightMap[(x + 1) + (y - 1) * width] > darkness) computeAdjacentLight(x + 1, y - 1);
+//		middle row
+		if (x > 0) if (lightMap[(x - 1) + y * width] > darkness) computeAdjacentLight(x - 1, y);
+//		don't include the original tile
+		if (x < width) if (lightMap[(x + 1) + y * width] > darkness) computeAdjacentLight(x + 1, y);
+//		bottom row
+		if (x > 0 && y < height) if (lightMap[(x - 1) + (y + 1) * width] > darkness) computeAdjacentLight(x - 1, y + 1);
+		if (y < height) if (lightMap[x + (y + 1) * width] > darkness) computeAdjacentLight(x, y + 1);
+		if (x < width && y < height) if (lightMap[(x + 1) + (y + 1) * width] > darkness) computeAdjacentLight(x + 1, y + 1);
+		
+	}
+	
 	public void generateLevel() {
+		generateLightMap();
 	}
 	
 	public void loadLevel(String path) {
@@ -70,7 +125,9 @@ public class Level {
 			this.width = i.getWidth();
 			this.height = i.getHeight();
 			tiles = new int[width * height];
+			lightMap = new double[width * height];
 			i.getRGB(0, 0, width, height, tiles, 0, width);
+			generateLightMap();
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -100,16 +157,6 @@ public class Level {
 		
 	}
 	
-	public Player getPlayer() {
-		
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i) instanceof Player) return (Player) entities.get(i);
-		}
-//		i hope this never gets reached
-		return null;
-		
-	}
-	
 	/**
 	 * renders everything
 	 * */
@@ -132,6 +179,10 @@ public class Level {
 	
 	public Tile getTile(int x, int y) {
 		return Tiles.voidTile; //TODO: not engine
+	}
+	
+	public double getLightValue(int x, int y) {
+		return lightMap[x + y * width];
 	}
 	
 	public boolean checkBounds(int x, int y) {

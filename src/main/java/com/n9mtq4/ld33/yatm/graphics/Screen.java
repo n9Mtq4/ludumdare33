@@ -15,6 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.graphics;
 
+import com.n9mtq4.ld33.yatm.level.Level;
 import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
@@ -76,17 +77,23 @@ public class Screen {
 		}
 	}
 	
-	public void renderTile(int xp, int yp, Tile tile) {
+	public void renderTile(int xp, int yp, Tile tile, Level level) {
+		Sprite sprite = tile.sprite.getSprite();
 		yp -= yOff;
 		xp -= xOff;
-		for (int y = 0; y < tile.sprite.SIZE; y++) {
+		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
-			for (int x = 0; x < tile.sprite.SIZE; x++) {
+			for (int x = 0; x < sprite.SIZE; x++) {
 				int xa = x + xp;
-				if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
-				if (tile.sprite.pixels[x + y * tile.sprite.SIZE] != Render.TRANSPARENT_COLOR) {
-					pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+				if (sprite.pixels[x + y * sprite.SIZE] != Render.TRANSPARENT_COLOR) {
+					double lightValue = level.getLightValue(xp, yp);
+					int spriteColor = sprite.pixels[x + y * sprite.SIZE];
+					int r = (int) (((spriteColor >> 16) & 0xff) * lightValue);
+					int g = (int) (((spriteColor >> 8) & 0xff) * lightValue);
+					int b = (int) (((spriteColor) & 0xff) * lightValue);
+					pixels[xa + ya * width] = (r << 16) | (g << 8) | b;
 				}
 			}
 		}

@@ -30,12 +30,14 @@ public class Sprite {
 	public int height;
 	public int[] pixels;
 	private SpriteSheet sheet;
+	public boolean effectedByLight = true;
 	
 	public Sprite(int size, Color color) {
 		this.SIZE = size;
 		this.SIZE_MASK = SIZE - 1;
 		this.width = SIZE;
 		this.height = SIZE;
+		pixels = new int[width * height];
 		setColor(color.getRGB());
 	}
 	
@@ -44,6 +46,7 @@ public class Sprite {
 		this.SIZE_MASK = SIZE - 1;
 		this.width = width;
 		this.height = height;
+		pixels = new int[width * height];
 	}
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {

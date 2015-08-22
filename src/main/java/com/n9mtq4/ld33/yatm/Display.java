@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm;
 
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.game.Sprites;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
@@ -26,6 +27,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 /**
  * Created by will on 8/21/15 at 9:03 PM.
@@ -49,6 +51,9 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	private KeyBoard keyBoard;
 	private Progress progress;
 	
+	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	
 	public Display() {
 		//noinspection ConstantConditions
 		this.progress = DEBUG ? Progress.IN_GAME : Progress.MAIN_MENU;
@@ -56,10 +61,12 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		setPreferredSize(size);
 		this.screen = new Screen(WIDTH, HEIGHT);
 		
-		
+		level = new Level(8, 8);
+		player = new Player(0, 0, Sprites.forwardAnimation, this);
+		level.add(player);
 		
 		initListeners();
-		initBuffer();
+//		initBuffer();
 	}
 	
 	private void initListeners() {
@@ -73,7 +80,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		if (thread != null) stop();
 		running = true;
-		initBuffer();
+//		initBuffer();
 		thread = new Thread(this, "Game Thread");
 		thread.start();
 		
@@ -111,9 +118,29 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	
 	public void renderGame() {
 		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
 		screen.clear();
 		int xScroll = player.x - screen.width / 2;
 		int yScroll = player.y - screen.height / 2;
+		level.render(xScroll, yScroll, screen);
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
+		Graphics g = bs.getDrawGraphics();
+		g.setColor(Color.BLACK);
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		if (DEBUG) {
+			g.setColor(new Color(255, 255, 0));
+			g.setFont(new Font("Verdana", Font.BOLD, 36));
+			g.drawString(String.valueOf(fps + " fps"), 0, HEIGHT - 18);
+			g.setFont(new Font("Verdana", Font.BOLD, 12));
+		}
+		
+		g.dispose();
+		bs.show();
 	}
 	
 	public void render() {
@@ -138,7 +165,6 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
-			return;
 		}
 	}
 	

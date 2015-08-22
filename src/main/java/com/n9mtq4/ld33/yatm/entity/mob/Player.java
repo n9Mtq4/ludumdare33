@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.entity.mob;
 
 import com.n9mtq4.ld33.yatm.Display;
+import com.n9mtq4.ld33.yatm.game.Sprites;
 import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
@@ -32,13 +33,16 @@ public class Player extends Mob {
 	public AnimatedSprite left;
 	public AnimatedSprite right;
 	
-	public Player(int x, int y, Display display) {
-		
+	public Player(int x, int y, Sprite sprite, Display display) {
 		super(x, y);
 		this.x = x;
 		this.y = y;
+		this.sprite = sprite;
 		this.display = display;
-		
+		this.forward = Sprites.forwardAnimation;
+		this.backwards = Sprites.forwardAnimation;
+		this.left = Sprites.forwardAnimation;
+		this.right = Sprites.forwardAnimation;
 	}
 	
 	@Override
