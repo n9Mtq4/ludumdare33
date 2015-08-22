@@ -33,7 +33,7 @@ public class Level {
 	public int height;
 	public int[] tiles;
 	public double[] lightMap;
-	public double darkness = 2.0d;
+	public double darkness = 0.2d;
 	public double ambientLight = 0.2d;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
@@ -60,9 +60,6 @@ public class Level {
 	
 	public void generateLightMap() {
 		lightMap = new double[width * height];
-		for (int i = 0; i < lightMap.length; i++) {
-			lightMap[i] = ambientLight;
-		}
 		updateLightMap();
 	}
 	
@@ -81,8 +78,8 @@ public class Level {
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (getTile(x, y).getSourceLight() == 0.0d) continue;
-				
+//				TODO: this next line works when it is backwards for some reason???
+				if (getTile(x, y).getSourceLight() != 0.0d) continue;
 //				for every tile, that isn't a source tile
 //				make the light the ambient light
 				double light = ambientLight;
@@ -99,8 +96,11 @@ public class Level {
 							int yd2 = (int) Math.pow(yd, 2);
 							double distance = Math.sqrt(xd2 + yd2);
 //							divide the distance by the darkness
-							double addLight = distance / darkness;
-							light += getTile(x1, y1).getSourceLight() - addLight;
+							double dTimesD = distance * darkness;
+//							light += getTile(x1, y1).getSourceLight() - addLight;
+							double newLight = getTile(x1, y1).getSourceLight() - dTimesD;
+//							light += getTile(x1, y1).getSourceLight() - dTimesD;
+							if (newLight > ambientLight) light += newLight;
 						}
 					}
 				}
@@ -182,10 +182,11 @@ public class Level {
 	}
 	
 	public double getLightValue(int x, int y) {
+		if (checkTileBounds(x, y)) return ambientLight;
 		return lightMap[x + y * width];
 	}
 	
-	public boolean checkBounds(int x, int y) {
+	public boolean checkTileBounds(int x, int y) {
 		return x < 0 || y < 0 || x >= width || y >= height;
 	}
 	

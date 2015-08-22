@@ -159,6 +159,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	
 	public void tick() {
 		
+		keyBoard.update();
 		level.tick();
 		
 	}
