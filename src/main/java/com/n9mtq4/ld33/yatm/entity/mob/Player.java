@@ -13,10 +13,49 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity;
+package com.n9mtq4.ld33.yatm.entity.mob;
+
+import com.n9mtq4.ld33.yatm.Display;
+import com.n9mtq4.ld33.yatm.graphics.Screen;
+import com.n9mtq4.ld33.yatm.graphics.Sprite;
 
 /**
  * Created by will on 8/21/15 at 9:55 PM.
  */
-public class Player {
+public class Player extends Mob {
+	
+	public Display display;
+	
+	public Sprite forward;
+	public Sprite backwards;
+	public Sprite left;
+	public Sprite right;
+	
+	public Player(int x, int y, Display display) {
+		
+		super(x, y);
+		this.x = x;
+		this.y = y;
+		this.display = display;
+		
+	}
+	
+	@Override
+	public void render(Screen screen) {
+		if (dir == 0) {
+			screen.renderSpriteRel(x, y, forward);
+		}else if (dir == 1) {
+			screen.renderSpriteRel(x, y, right);
+		}else if (dir == 2) {
+			screen.renderSpriteRel(x, y, backwards);
+		}else if (dir == 3) {
+			screen.renderSpriteRel(x, y, left);
+		}
+	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+	}
+	
 }

@@ -15,7 +15,7 @@
 
 package com.n9mtq4.ld33.yatm;
 
-import com.n9mtq4.ld33.yatm.entity.Player;
+import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.level.LevelManager;

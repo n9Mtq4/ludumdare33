@@ -23,6 +23,7 @@ import com.n9mtq4.ld33.yatm.level.Tile;
 public class Screen {
 	
 	public static final int TILE_SIZE = 5; // 2^TILE_SIZE = pixels
+	public static final int ABS_TILE_SIZE = 1 << TILE_SIZE;
 	private static final int LEVEL_WIDTH = 64; //TODO: change later
 	private static final int LEVEL_HEIGHT = 64; //TODO: change later
 	
@@ -41,7 +42,8 @@ public class Screen {
 		this.tiles = new int[LEVEL_WIDTH * LEVEL_HEIGHT];
 	}
 	
-	public void renderSpriteAbs(int xp, int yp, Sprite sprite) {
+	public void renderSpriteAbs(int xp, int yp, Sprite spriteSource) {
+		Sprite sprite = spriteSource.getSprite();
 		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
 			for (int x = 0; x < sprite.SIZE; x++) {
@@ -56,7 +58,8 @@ public class Screen {
 		}
 	}
 	
-	public void renderSpriteRel(int xp, int yp, Sprite sprite) {
+	public void renderSpriteRel(int xp, int yp, Sprite spriteSource) {
+		Sprite sprite = spriteSource.getSprite();
 		yp -= yOff;
 		xp -= xOff;
 		for (int y = 0; y < sprite.SIZE; y++) {

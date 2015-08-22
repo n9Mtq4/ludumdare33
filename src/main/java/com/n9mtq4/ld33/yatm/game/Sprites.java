@@ -13,46 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity;
+package com.n9mtq4.ld33.yatm.game;
 
-import com.n9mtq4.ld33.yatm.entity.projectile.Projectile;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
-import com.n9mtq4.ld33.yatm.level.Level;
+
+import java.awt.Color;
 
 /**
- * Created by will on 4/18/15 at 2:58 PM.
+ * Created by will on 8/21/15 at 10:52 PM.
  */
-public abstract class Entity {
+public class Sprites {
 	
-	public int x;
-	public int y;
-	public boolean removed = false;
-	public Level level;
-	protected Sprite sprite;
-	
-	public void init(Level level) {
-		this.level = level;
-	}
-	
-	public void render(Screen screen) {
-		
-	}
-	
-	public void tick() {
-		
-	}
-	
-	public void remove() {
-		removed = true;
-	}
-	
-	public boolean isRemoved() {
-		return removed;
-	}
-	
-	public void onProjectileHit(Projectile projectile) {
-		
-	}
+	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(0, 0, 0));
 	
 }

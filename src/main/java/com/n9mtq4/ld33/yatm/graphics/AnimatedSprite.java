@@ -13,10 +13,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity;
+package com.n9mtq4.ld33.yatm.graphics;
 
 /**
- * Created by will on 8/21/15 at 9:32 PM.
+ * Created by will on 8/21/15 at 10:22 PM.
  */
-public class Mob extends Entity {
+public class AnimatedSprite extends Sprite {
+	
+	private int frameTick;
+	private int frame;
+	private int frameRate;
+	private Sprite[] frames;
+	
+	public AnimatedSprite(Sprite[] frames, int width, int height, int frameRate) {
+		super(width, height);
+		this.frames = frames;
+		this.frame = 0;
+		this.frameRate = frameRate;
+		this.frameTick = 0;
+	}
+	
+	@Override
+	public void tick() {
+		if (frameTick - frameRate == 0) {
+			frameTick = 0;
+			frame = frame < frames.length ? frame++ : 0; //TODO: will this work?
+		}
+	}
+	
+	@Override
+	public Sprite getSprite() {
+		return frames[frame];
+	}
+	
 }

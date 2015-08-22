@@ -15,7 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.level;
 
-import com.n9mtq4.ld33.yatm.entity.Mob;
+import com.n9mtq4.ld33.yatm.entity.mob.Mob;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
 
