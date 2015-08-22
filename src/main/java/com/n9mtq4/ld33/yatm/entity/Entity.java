@@ -38,6 +38,14 @@ public abstract class Entity {
 		
 	}
 	
+	public void renderSpriteRel(Screen screen, Sprite sprite) {
+		screen.renderSpriteRel(x, y, x / Screen.ABS_TILE_SIZE, y / Screen.ABS_TILE_SIZE, sprite, level);
+	}
+	
+	public void renderSpriteAbs(Screen screen, Sprite sprite) {
+		screen.renderSpriteAbs(x, y, x / Screen.ABS_TILE_SIZE, y / Screen.ABS_TILE_SIZE, sprite, level);
+	}
+	
 	public void tick() {
 		
 	}

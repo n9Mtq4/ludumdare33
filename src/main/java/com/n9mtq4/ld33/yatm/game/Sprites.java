@@ -27,7 +27,7 @@ import java.awt.Color;
  */
 public class Sprites {
 	
-	public static final SpriteSheet debugPlayer = new SpriteSheet("/textures/playerSheet.png", 256);
+	public static final SpriteSheet monsters = new SpriteSheet("/textures/monsters.png", 256);
 	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 255, 255));
@@ -38,13 +38,15 @@ public class Sprites {
 	public static final Sprite stainedWood = new Sprite(Screen.ABS_TILE_SIZE, 2, 0, tiles);
 	public static final Sprite table = new Sprite(Screen.ABS_TILE_SIZE, 3, 0, tiles);
 	
-	public static final AnimatedSprite monster1f = getAnimatedSprite(0, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
-	public static final AnimatedSprite monster1b = getAnimatedSprite(1, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
-	public static final AnimatedSprite monster1l = getAnimatedSprite(2, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
-	public static final AnimatedSprite monster1r = getAnimatedSprite(3, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
+	public static final AnimatedSprite monster1b = getAnimatedSprite(0, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1f = getAnimatedSprite(1, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1l = getAnimatedSprite(2, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1r = getAnimatedSprite(3, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	
-	
-	
+	public static final AnimatedSprite monster2b = getAnimatedSprite(4, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster2f = getAnimatedSprite(5, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster2l = getAnimatedSprite(6, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster2r = getAnimatedSprite(7, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	
 	
 	
@@ -53,9 +55,9 @@ public class Sprites {
 	 * */
 	private static AnimatedSprite getAnimatedSprite(int y, int x1, int x2, int size, SpriteSheet sheet, int framerate) {
 		
-		Sprite[] frames = new Sprite[Math.abs(x1 - x2) + 1];
+		Sprite[] frames = new Sprite[Math.abs(x1 - x2)];
 		
-		for (int x = x1; x <= x2; x++) {
+		for (int x = x1; x < x2; x++) {
 			frames[x] = new Sprite(size, x, y, sheet);
 		}
 		

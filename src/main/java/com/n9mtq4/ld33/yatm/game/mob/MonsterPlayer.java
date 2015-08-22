@@ -41,4 +41,12 @@ public class MonsterPlayer extends Player {
 		
 	}
 	
+	public Monster getType() {
+		return type;
+	}
+	
+	public void setType(Monster type) {
+		this.type = type;
+	}
+	
 }

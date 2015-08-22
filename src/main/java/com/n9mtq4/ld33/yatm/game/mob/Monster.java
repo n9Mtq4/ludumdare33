@@ -23,7 +23,8 @@ import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
  */
 public enum Monster {
 	
-	DEBUG(Sprites.monster1f, Sprites.monster1b, Sprites.monster1l, Sprites.monster1r);
+	GREEN_BLOB(Sprites.monster1f, Sprites.monster1b, Sprites.monster1l, Sprites.monster1r),
+	FLYING(Sprites.monster2f, Sprites.monster2b, Sprites.monster2l, Sprites.monster2r);
 	
 	private AnimatedSprite forward;
 	private AnimatedSprite backward;

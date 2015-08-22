@@ -43,7 +43,7 @@ public class Screen {
 		this.tiles = new int[LEVEL_WIDTH * LEVEL_HEIGHT];
 	}
 	
-	public void renderSpriteAbs(int xp, int yp, Sprite spriteSource) {
+	public void renderSpriteAbs(int xp, int yp, int x1, int y1, Sprite spriteSource, Level level) {
 		Sprite sprite = spriteSource.getSprite();
 		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
@@ -53,13 +53,21 @@ public class Screen {
 				if (xa < 0) xa = 0;
 				int col = sprite.pixels[x + y * sprite.SIZE];
 				if (col != Render.TRANSPARENT_COLOR) {
-					pixels[xa + ya * width] = col;
+					if (sprite.effectedByLight) {
+						double lightValue = level.getLightValue(x1, y1);
+						int r = (int) (((col >> 16) & 0xff) * lightValue);
+						int g = (int) (((col >> 8) & 0xff) * lightValue);
+						int b = (int) (((col) & 0xff) * lightValue);
+						pixels[xa + ya * width] = (r << 16) | (g << 8) | b;
+					}else {
+						pixels[xa + ya * width] = col;
+					}
 				}
 			}
 		}
 	}
 	
-	public void renderSpriteRel(int xp, int yp, Sprite spriteSource) {
+	public void renderSpriteRel(int xp, int yp, int x1, int y1, Sprite spriteSource, Level level) {
 		Sprite sprite = spriteSource.getSprite();
 		yp -= yOff;
 		xp -= xOff;
@@ -71,7 +79,15 @@ public class Screen {
 				if (xa < 0) xa = 0;
 				int col = sprite.pixels[x + y * sprite.SIZE];
 				if (col != Render.TRANSPARENT_COLOR) {
-					pixels[xa + ya * width] = col;
+					if (sprite.effectedByLight) {
+						double lightValue = level.getLightValue(x1, y1);
+						int r = (int) (((col >> 16) & 0xff) * lightValue);
+						int g = (int) (((col >> 8) & 0xff) * lightValue);
+						int b = (int) (((col) & 0xff) * lightValue);
+						pixels[xa + ya * width] = (r << 16) | (g << 8) | b;
+					}else {
+						pixels[xa + ya * width] = col;
+					}
 				}
 			}
 		}

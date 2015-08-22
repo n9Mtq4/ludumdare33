@@ -64,7 +64,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		initListeners();
 		
-		player = new MonsterPlayer(0, 0, this, keyBoard, Monster.DEBUG);
+		player = new MonsterPlayer(0, 0, this, keyBoard, Monster.FLYING);
 		level = new Level(8, 8);
 		level.add(player);
 		

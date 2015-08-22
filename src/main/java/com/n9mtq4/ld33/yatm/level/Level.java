@@ -35,7 +35,7 @@ public class Level {
 	public int[] tiles;
 	public double[] lightMap;
 	public double darkness = 0.2d;
-	public double ambientLight = 0.2d;
+	public double ambientLight = 0.0d;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
 	
