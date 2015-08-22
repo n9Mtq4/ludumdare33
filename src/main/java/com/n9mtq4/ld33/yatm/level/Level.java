@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.level;
 
 import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.game.Tiles;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 
@@ -174,6 +175,16 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
+	}
+	
+	public Player getPlayer() {
+		
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Player) return (Player) entities.get(i);
+		}
+//		i hope this never gets reached
+		return null;
+		
 	}
 	
 	public Tile getTile(int x, int y) {

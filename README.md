@@ -8,10 +8,10 @@ Tools used / will be used:
 
 -----------------------------
 Things to do
- - lighting
- - cut scene manager
- - music
- - line of sight alg
+ [x] lighting
+ [ ] cut scene manager
+ [ ] music
+ [ ] line of sight alg
 
 -----------------------------
 ##Brainstorm area

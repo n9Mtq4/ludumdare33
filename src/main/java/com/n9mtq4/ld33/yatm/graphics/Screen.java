@@ -79,7 +79,7 @@ public class Screen {
 	
 	public void renderTile(int xp, int yp, int x1, int y1, Tile tile, Level level) {
 		Sprite sprite = tile.sprite.getSprite();
-		yp -= yOff; //here is the problem
+		yp -= yOff;
 		xp -= xOff;
 		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
@@ -87,9 +87,9 @@ public class Screen {
 				int xa = x + xp;
 				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
-				if (sprite.pixels[x + y * sprite.SIZE] != Render.TRANSPARENT_COLOR) {
+				int spriteColor = sprite.pixels[x + y * sprite.SIZE];
+				if (spriteColor != Render.TRANSPARENT_COLOR) {
 					double lightValue = level.getLightValue(x1, y1);
-					int spriteColor = sprite.pixels[x + y * sprite.SIZE];
 					int r = (int) (((spriteColor >> 16) & 0xff) * lightValue);
 					int g = (int) (((spriteColor >> 8) & 0xff) * lightValue);
 					int b = (int) (((spriteColor) & 0xff) * lightValue);

@@ -13,39 +13,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity.mob;
+package com.n9mtq4.ld33.yatm.game.mob;
 
-import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.entity.Direction;
+import com.n9mtq4.ld33.yatm.game.Sprites;
 import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
-import com.n9mtq4.ld33.yatm.graphics.Screen;
-import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
 /**
- * Created by will on 8/21/15 at 9:55 PM.
+ * Created by will on 8/22/15 at 1:32 PM.
  */
-public class Player extends AnimatedMob {
+public enum Monster {
 	
-	public Display display;
-	protected int speed = 2;
+	DEBUG(Sprites.monster1f, Sprites.monster1b, Sprites.monster1l, Sprites.monster1r);
 	
-	protected KeyBoard keyBoard;
+	private AnimatedSprite forward;
+	private AnimatedSprite backward;
+	private AnimatedSprite left;
+	private AnimatedSprite right;
 	
-	public Player(int x, int y, Display display, KeyBoard keyBoard) {
-		super(x * Screen.ABS_TILE_SIZE, y * Screen.ABS_TILE_SIZE);
-		this.x = x;
-		this.y = y;
-		this.display = display;
-		this.keyBoard = keyBoard;
+	Monster(AnimatedSprite forward, AnimatedSprite backward, AnimatedSprite left, AnimatedSprite right) {
+		this.forward = forward;
+		this.backward = backward;
+		this.left = left;
+		this.right = right;
 	}
 	
-	@Override
-	public void tick() {
-		super.tick();
-		if (keyBoard.up) move(0, -speed);
-		if (keyBoard.down) move(0, speed);
-		if (keyBoard.left) move(-speed, 0);
-		if (keyBoard.right) move(speed, 0);
+	public AnimatedSprite getForward() {
+		return forward;
+	}
+	
+	public AnimatedSprite getBackward() {
+		return backward;
+	}
+	
+	public AnimatedSprite getLeft() {
+		return left;
+	}
+	
+	public AnimatedSprite getRight() {
+		return right;
 	}
 	
 }

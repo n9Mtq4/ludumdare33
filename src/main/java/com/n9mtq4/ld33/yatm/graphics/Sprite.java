@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.graphics;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Created by will on 8/21/15 at 9:19 PM.
@@ -63,9 +64,9 @@ public class Sprite {
 	
 	private void load() {
 		
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.width];
+		for (int y = 0; y < SIZE; y++) {
+			for (int x = 0; x < SIZE; x++) {
+				pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.width];
 			}
 		}
 		
@@ -75,6 +76,12 @@ public class Sprite {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = color;
 		}
+	}
+	
+	public BufferedImage toBufferedImage() {
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+		image.setRGB(0, 0, width, height, pixels, 0, width);
+		return image;
 	}
 	
 	public void tick() {

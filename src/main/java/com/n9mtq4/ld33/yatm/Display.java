@@ -16,9 +16,8 @@
 package com.n9mtq4.ld33.yatm;
 
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
-import com.n9mtq4.ld33.yatm.game.Monster;
-import com.n9mtq4.ld33.yatm.game.MonsterPlayer;
-import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.game.mob.Monster;
+import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;

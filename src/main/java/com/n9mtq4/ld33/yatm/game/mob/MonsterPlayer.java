@@ -13,43 +13,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.game.mob;
 
-import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
+import com.n9mtq4.ld33.yatm.Display;
+import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
 /**
- * Created by will on 8/22/15 at 1:32 PM.
+ * Created by will on 8/22/15 at 1:31 PM.
  */
-public enum Monster {
+public class MonsterPlayer extends Player {
 	
-	DEBUG(Sprites.monster1f, Sprites.monster1b, Sprites.monster1l, Sprites.monster1r);
+	private Monster type;
 	
-	private AnimatedSprite forward;
-	private AnimatedSprite backward;
-	private AnimatedSprite left;
-	private AnimatedSprite right;
-	
-	Monster(AnimatedSprite forward, AnimatedSprite backward, AnimatedSprite left, AnimatedSprite right) {
-		this.forward = forward;
-		this.backward = backward;
-		this.left = left;
-		this.right = right;
+	public MonsterPlayer(int x, int y, Display display, KeyBoard keyBoard, Monster type) {
+		super(x, y, display, keyBoard);
+		this.type = type;
+		initSprites();
 	}
 	
-	public AnimatedSprite getForward() {
-		return forward;
-	}
-	
-	public AnimatedSprite getBackward() {
-		return backward;
-	}
-	
-	public AnimatedSprite getLeft() {
-		return left;
-	}
-	
-	public AnimatedSprite getRight() {
-		return right;
+	private void initSprites() {
+		
+		forward = type.getForward();
+		backwards = type.getBackward();
+		left = type.getLeft();
+		right = type.getRight();
+		
 	}
 	
 }

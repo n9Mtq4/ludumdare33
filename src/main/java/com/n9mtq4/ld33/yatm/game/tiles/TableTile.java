@@ -13,32 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.game.tiles;
 
-import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.entity.mob.Player;
-import com.n9mtq4.ld33.yatm.input.KeyBoard;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/22/15 at 1:31 PM.
+ * Created by will on 8/22/15 at 3:12 PM.
  */
-public class MonsterPlayer extends Player {
+public class TableTile extends Tile {
 	
-	private Monster type;
-	
-	public MonsterPlayer(int x, int y, Display display, KeyBoard keyBoard, Monster type) {
-		super(x, y, display, keyBoard);
-		this.type = type;
-		initSprites();
-	}
-	
-	private void initSprites() {
-		
-		forward = type.getForward();
-		backwards = type.getBackward();
-		left = type.getLeft();
-		right = type.getRight();
-		
+	public TableTile() {
+		super(Sprites.table);
 	}
 	
 }

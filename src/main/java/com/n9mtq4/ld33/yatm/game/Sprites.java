@@ -28,13 +28,13 @@ import java.awt.Color;
 public class Sprites {
 	
 	public static final SpriteSheet debugPlayer = new SpriteSheet("/textures/playerSheet.png", 256);
-	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 265);
+	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 255, 255));
 	public static final Sprite wallTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(100, 100, 100));
 	public static final Sprite lampTile = new Sprite(Screen.ABS_TILE_SIZE, 0, 0, tiles);
 	public static final Sprite carpetGray = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, tiles);
-	public static final Sprite carpetTan = new Sprite(Screen.ABS_TILE_SIZE, 4, 0, tiles);
+	public static final Sprite carpetTan = new Sprite(Screen.ABS_TILE_SIZE, 40, 0, tiles);
 	public static final Sprite stainedWood = new Sprite(Screen.ABS_TILE_SIZE, 2, 0, tiles);
 	public static final Sprite table = new Sprite(Screen.ABS_TILE_SIZE, 3, 0, tiles);
 	

@@ -60,7 +60,7 @@ public class Mob extends Entity {
 	}
 	
 	protected boolean isOutSideLevel() {
-		return (x < 0 || y < 0 || x > level.width << Screen.TILE_SIZE || y > level.height << Screen.TILE_SIZE);
+		return (x < 0 || y < 0 || x > (level.width << Screen.TILE_SIZE) || y > (level.height << Screen.TILE_SIZE));
 	}
 	
 	public void move(int xd, int yd) {
@@ -95,7 +95,11 @@ public class Mob extends Entity {
 		
 	}
 	
-	public int getDistance(int x1, int y1, int x2, int y2) {
+	protected int getDistance(Entity e1, Entity e2) {
+		return getDistance(e1.x, e1.y, e2.x, e2.y);
+	}
+	
+	protected int getDistance(int x1, int y1, int x2, int y2) {
 		return (int) Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	}
 	
