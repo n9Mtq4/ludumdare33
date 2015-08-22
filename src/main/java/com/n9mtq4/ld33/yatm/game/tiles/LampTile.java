@@ -13,18 +13,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.game.tiles;
 
-import com.n9mtq4.ld33.yatm.game.tiles.*;
-import com.n9mtq4.ld33.yatm.level.tile.VoidTile;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/21/15 at 10:53 PM.
+ * Created by will on 8/22/15 at 3:56 AM.
  */
-public class Tiles {
+public class LampTile extends Tile {
 	
-	public static final VoidTile voidTile = new VoidTile();
-	public static final WallTile wallTile = new WallTile();
-	public static final LampTile lampTile = new LampTile();
+	public LampTile() {
+		super(Sprites.lampTile);
+	}
 	
+	@Override
+	public double getSourceLight() {
+		return 1.0d;
+	}
 }

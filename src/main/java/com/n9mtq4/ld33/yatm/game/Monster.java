@@ -15,16 +15,41 @@
 
 package com.n9mtq4.ld33.yatm.game;
 
-import com.n9mtq4.ld33.yatm.game.tiles.*;
-import com.n9mtq4.ld33.yatm.level.tile.VoidTile;
+import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 
 /**
- * Created by will on 8/21/15 at 10:53 PM.
+ * Created by will on 8/22/15 at 1:32 PM.
  */
-public class Tiles {
+public enum Monster {
 	
-	public static final VoidTile voidTile = new VoidTile();
-	public static final WallTile wallTile = new WallTile();
-	public static final LampTile lampTile = new LampTile();
+	DEBUG(Sprites.monster1f, Sprites.monster1b, Sprites.monster1l, Sprites.monster1r);
+	
+	private AnimatedSprite forward;
+	private AnimatedSprite backward;
+	private AnimatedSprite left;
+	private AnimatedSprite right;
+	
+	Monster(AnimatedSprite forward, AnimatedSprite backward, AnimatedSprite left, AnimatedSprite right) {
+		this.forward = forward;
+		this.backward = backward;
+		this.left = left;
+		this.right = right;
+	}
+	
+	public AnimatedSprite getForward() {
+		return forward;
+	}
+	
+	public AnimatedSprite getBackward() {
+		return backward;
+	}
+	
+	public AnimatedSprite getLeft() {
+		return left;
+	}
+	
+	public AnimatedSprite getRight() {
+		return right;
+	}
 	
 }

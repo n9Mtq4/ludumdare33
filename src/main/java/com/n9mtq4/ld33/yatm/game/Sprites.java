@@ -15,6 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.game;
 
+import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
 import com.n9mtq4.ld33.yatm.graphics.SpriteSheet;
@@ -30,10 +31,36 @@ public class Sprites {
 	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 265);
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 255, 255));
+	public static final Sprite wallTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(100, 100, 100));
 	public static final Sprite lampTile = new Sprite(Screen.ABS_TILE_SIZE, 0, 0, tiles);
-	public static final Sprite carpetGrey = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, tiles);
+	public static final Sprite carpetGray = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, tiles);
 	public static final Sprite carpetTan = new Sprite(Screen.ABS_TILE_SIZE, 4, 0, tiles);
 	public static final Sprite stainedWood = new Sprite(Screen.ABS_TILE_SIZE, 2, 0, tiles);
 	public static final Sprite table = new Sprite(Screen.ABS_TILE_SIZE, 3, 0, tiles);
+	
+	public static final AnimatedSprite monster1f = getAnimatedSprite(0, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
+	public static final AnimatedSprite monster1b = getAnimatedSprite(1, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
+	public static final AnimatedSprite monster1l = getAnimatedSprite(2, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
+	public static final AnimatedSprite monster1r = getAnimatedSprite(3, 0, 5, Screen.ABS_TILE_SIZE, debugPlayer, 60);
+	
+	
+	
+	
+	
+	
+	/**
+	 * generates an animated sprite
+	 * */
+	private static AnimatedSprite getAnimatedSprite(int y, int x1, int x2, int size, SpriteSheet sheet, int framerate) {
+		
+		Sprite[] frames = new Sprite[Math.abs(x1 - x2) + 1];
+		
+		for (int x = x1; x <= x2; x++) {
+			frames[x] = new Sprite(size, x, y, sheet);
+		}
+		
+		return new AnimatedSprite(frames, size, size, framerate);
+		
+	}
 	
 }

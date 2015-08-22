@@ -88,12 +88,13 @@ public class Screen {
 				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
 				if (sprite.pixels[x + y * sprite.SIZE] != Render.TRANSPARENT_COLOR) {
-					double lightValue = level.getLightValue(xp, yp);
+//					double lightValue = level.getLightValue(x1, y1);
 					int spriteColor = sprite.pixels[x + y * sprite.SIZE];
-					int r = (int) (((spriteColor >> 16) & 0xff) * lightValue);
-					int g = (int) (((spriteColor >> 8) & 0xff) * lightValue);
-					int b = (int) (((spriteColor) & 0xff) * lightValue);
-					pixels[xa + ya * width] = (r << 16) | (g << 8) | b;
+//					int r = (int) (((spriteColor >> 16) & 0xff) * lightValue);
+//					int g = (int) (((spriteColor >> 8) & 0xff) * lightValue);
+//					int b = (int) (((spriteColor) & 0xff) * lightValue);
+//					pixels[xa + ya * width] = (r << 16) | (g << 8) | b;
+					pixels[xa + ya * width] = spriteColor;
 				}
 			}
 		}

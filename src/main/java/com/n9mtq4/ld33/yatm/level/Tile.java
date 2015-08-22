@@ -34,8 +34,8 @@ public class Tile {
 		this.sprite = sprite;
 	}
 	
-	public void render(int x, int y, Screen screen) {
-		screen.renderTile(x << Screen.TILE_SIZE, y << Screen.TILE_SIZE, this);
+	public void render(int x, int y, Screen screen, Level level) {
+		screen.renderTile(x << Screen.TILE_SIZE, y << Screen.TILE_SIZE, this, level);
 	}
 	
 	public void mobIn(Mob mob) {

@@ -16,10 +16,10 @@
 package com.n9mtq4.ld33.yatm.entity.mob;
 
 import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.entity.Direction;
 import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
-import com.n9mtq4.ld33.yatm.graphics.Sprite;
+import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
 /**
  * Created by will on 8/21/15 at 9:55 PM.
@@ -27,22 +27,20 @@ import com.n9mtq4.ld33.yatm.graphics.Sprite;
 public class Player extends Mob {
 	
 	public Display display;
+	protected int speed = 2;
 	
 	public AnimatedSprite forward;
 	public AnimatedSprite backwards;
 	public AnimatedSprite left;
 	public AnimatedSprite right;
+	protected KeyBoard keyBoard;
 	
-	public Player(int x, int y, Sprite sprite, Display display) {
-		super(x, y);
+	public Player(int x, int y, Display display, KeyBoard keyBoard) {
+		super(x * Screen.ABS_TILE_SIZE, y * Screen.ABS_TILE_SIZE);
 		this.x = x;
 		this.y = y;
-		this.sprite = sprite;
 		this.display = display;
-		this.forward = Sprites.forwardAnimation;
-		this.backwards = Sprites.forwardAnimation;
-		this.left = Sprites.forwardAnimation;
-		this.right = Sprites.forwardAnimation;
+		this.keyBoard = keyBoard;
 	}
 	
 	@Override
@@ -65,6 +63,10 @@ public class Player extends Mob {
 		backwards.tick();
 		left.tick();
 		right.tick();
+		if (keyBoard.up) move(0, -speed);
+		if (keyBoard.down) move(0, speed);
+		if (keyBoard.left) move(-speed, 0);
+		if (keyBoard.right) move(speed, 0);
 	}
 	
 }

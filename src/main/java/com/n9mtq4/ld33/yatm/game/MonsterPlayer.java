@@ -13,13 +13,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity.mob;
+package com.n9mtq4.ld33.yatm.game;
+
+import com.n9mtq4.ld33.yatm.Display;
+import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
 /**
- * Created by will on 8/21/15 at 11:01 PM.
+ * Created by will on 8/22/15 at 1:31 PM.
  */
-public enum Direction {
+public class MonsterPlayer extends Player {
 	
-	FORWARD, BACKWARDS, LEFT, RIGHT
+	private Monster type;
+	
+	public MonsterPlayer(int x, int y, Display display, KeyBoard keyBoard, Monster type) {
+		super(x, y, display, keyBoard);
+		this.type = type;
+		initSprites();
+	}
+	
+	private void initSprites() {
+		
+		forward = type.getForward();
+		backwards = type.getBackward();
+		left = type.getLeft();
+		right = type.getRight();
+		
+	}
 	
 }

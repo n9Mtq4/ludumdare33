@@ -16,7 +16,6 @@
 package com.n9mtq4.ld33.yatm.level;
 
 import com.n9mtq4.ld33.yatm.entity.Entity;
-import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.game.Tiles;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 
@@ -34,7 +33,8 @@ public class Level {
 	public int height;
 	public int[] tiles;
 	public double[] lightMap;
-	public double darkness = 0.2d;
+	public double darkness = 2.0d;
+	public double ambientLight = 0.2d;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
 	
@@ -60,56 +60,55 @@ public class Level {
 	
 	public void generateLightMap() {
 		lightMap = new double[width * height];
+		for (int i = 0; i < lightMap.length; i++) {
+			lightMap[i] = ambientLight;
+		}
 		updateLightMap();
 	}
 	
+	/**
+	 * This is a cpu intensive process. should only be called once when the
+	 * level is being generated
+	 * */
 	public void updateLightMap() {
+		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 //				set source light
 				lightMap[x + y * width] += getTile(x, y).getSourceLight();
-//				now calculate how the light travels
-				computeAdjacentLight(x, y);
 			}
 		}
-	}
-	
-	/**
-	 * recursive function that calculates light adjacent to tiles.<br>
-	 * wow, this code gives me a headache just looking at it.
-	 * if it doesn't work, debugging this is going to suck :(
-	 * */
-	private void computeAdjacentLight(int x, int y) {
-//		remember edges! we shouldn't throw an IndexOutOfBounds!
-		double centerLight = lightMap[x + y * width];
-//		add the center light to the ones around it, but subtract the darkness level
-//		top row
-		if (x > 0 && y > 0) lightMap[(x - 1) + (y - 1) * width] += centerLight - darkness;
-		if (y > 0) lightMap[x + (y - 1) * width] += centerLight - darkness;
-		if (x < width && y > 0) lightMap[(x + 1) + (y - 1) * width] += centerLight - darkness;
-//		middle row
-		if (x > 0) lightMap[(x - 1) + y * width] += centerLight - darkness;
-//		don't include the original tile
-		if (x < width) lightMap[(x + 1) + y * width] += centerLight - darkness;
-//		bottom row
-		if (x > 0 && y < height) lightMap[(x - 1) + (y + 1) * width] += centerLight - darkness;
-		if (y < height) lightMap[x + (y + 1) * width] += centerLight - darkness;
-		if (x < width && y < height) lightMap[(x + 1) + (y + 1) * width] += centerLight - darkness;
 		
-//		now, go over those changed lights and see if any have more light than darkness level
-//		if so, compute their adjacent light levels!
-//		top row
-		if (x > 0 && y > 0) if (lightMap[(x - 1) + (y - 1) * width] > darkness) computeAdjacentLight(x - 1, y - 1);
-		if (y > 0) if (lightMap[x + (y - 1) * width] > darkness) computeAdjacentLight(x, y - 1);
-		if (x < width && y > 0) if (lightMap[(x + 1) + (y - 1) * width] > darkness) computeAdjacentLight(x + 1, y - 1);
-//		middle row
-		if (x > 0) if (lightMap[(x - 1) + y * width] > darkness) computeAdjacentLight(x - 1, y);
-//		don't include the original tile
-		if (x < width) if (lightMap[(x + 1) + y * width] > darkness) computeAdjacentLight(x + 1, y);
-//		bottom row
-		if (x > 0 && y < height) if (lightMap[(x - 1) + (y + 1) * width] > darkness) computeAdjacentLight(x - 1, y + 1);
-		if (y < height) if (lightMap[x + (y + 1) * width] > darkness) computeAdjacentLight(x, y + 1);
-		if (x < width && y < height) if (lightMap[(x + 1) + (y + 1) * width] > darkness) computeAdjacentLight(x + 1, y + 1);
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (getTile(x, y).getSourceLight() == 0.0d) continue;
+				
+//				for every tile, that isn't a source tile
+//				make the light the ambient light
+				double light = ambientLight;
+				
+//				go through all other tiles, looking for source tiles.
+				for (int y1 = 0; y1 < height; y1++) {
+					for (int x1 = 0; x1 < width; x1++) {
+						if (getTile(x1, y1).getSourceLight() > 0.0d) {
+//							for every source tile get the distance between the two
+//							calc distance between (x, y) and (x1, y1)
+							int xd = Math.abs(x - x1);
+							int yd = Math.abs(y - y1);
+							int xd2 = (int) Math.pow(xd, 2);
+							int yd2 = (int) Math.pow(yd, 2);
+							double distance = Math.sqrt(xd2 + yd2);
+//							divide the distance by the darkness
+							double addLight = distance / darkness;
+							light += getTile(x1, y1).getSourceLight() - addLight;
+						}
+					}
+				}
+				
+				lightMap[x + y * width] = light;
+				
+			}
+		}
 		
 	}
 	
@@ -169,7 +168,7 @@ public class Level {
 		
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
-				getTile(x, y).render(x, y, screen);
+				getTile(x, y).render(x, y, screen, this);
 			}
 		}
 		for (int i = 0; i < entities.size(); i++) {
@@ -178,7 +177,8 @@ public class Level {
 	}
 	
 	public Tile getTile(int x, int y) {
-		return Tiles.voidTile; //TODO: not engine
+		return (x == 4 && y == 4) ? Tiles.lampTile : Tiles.voidTile; //TODO: not engine
+//		return Tiles.voidTile;
 	}
 	
 	public double getLightValue(int x, int y) {

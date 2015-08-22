@@ -16,6 +16,8 @@
 package com.n9mtq4.ld33.yatm;
 
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.game.Monster;
+import com.n9mtq4.ld33.yatm.game.MonsterPlayer;
 import com.n9mtq4.ld33.yatm.game.Sprites;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
@@ -61,12 +63,12 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		setPreferredSize(size);
 		this.screen = new Screen(WIDTH, HEIGHT);
 		
+		initListeners();
+		
+		player = new MonsterPlayer(0, 0, this, keyBoard, Monster.DEBUG);
 		level = new Level(8, 8);
-		player = new Player(0, 0, Sprites.forwardAnimation, this);
 		level.add(player);
 		
-		initListeners();
-//		initBuffer();
 	}
 	
 	private void initListeners() {
