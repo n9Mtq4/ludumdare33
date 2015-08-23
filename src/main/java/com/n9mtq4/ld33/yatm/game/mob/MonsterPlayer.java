@@ -19,6 +19,8 @@ import com.n9mtq4.ld33.yatm.Display;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Created by will on 8/22/15 at 1:31 PM.
  */
@@ -39,6 +41,19 @@ public class MonsterPlayer extends Player {
 		left = type.getLeft();
 		right = type.getRight();
 		
+	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+		if (keyBoard.change) {
+			if (type == Monster.GREEN_BLOB) {
+				type = Monster.FLYING;
+			}else if (type == Monster.FLYING) {
+				type = Monster.GREEN_BLOB;
+			}
+			initSprites();
+		}
 	}
 	
 	public Monster getType() {

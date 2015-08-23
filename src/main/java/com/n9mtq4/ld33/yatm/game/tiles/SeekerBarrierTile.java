@@ -13,23 +13,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.game.tiles;
 
-import com.n9mtq4.ld33.yatm.game.tiles.*;
+import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.game.mob.SeekerMob;
 import com.n9mtq4.ld33.yatm.level.Tile;
-import com.n9mtq4.ld33.yatm.level.tile.VoidTile;
 
 /**
- * Created by will on 8/21/15 at 10:53 PM.
+ * Created by will on 8/22/15 at 7:51 PM.
  */
-public class Tiles {
+public class SeekerBarrierTile extends Tile {
 	
-	public static final VoidTile voidTile = new VoidTile();
-	public static final WallTile wallTile = new WallTile();
-	public static final HouseWall houseWall = new HouseWall();
-	public static final LampTile lampTile = new LampTile();
-	public static final TanCarpet tanCarpet = new TanCarpet();
-	public static final Tile toiletTile = new Tile(Sprites.toiletTile);
-	public static final SeekerBarrierTile seekerBarrier = new SeekerBarrierTile();
+	public SeekerBarrierTile() {
+		super(Sprites.carpetTan);
+	}
+	
+	@Override
+	public boolean isSolid(Entity entity) {
+		return (entity instanceof SeekerMob);
+	}
 	
 }

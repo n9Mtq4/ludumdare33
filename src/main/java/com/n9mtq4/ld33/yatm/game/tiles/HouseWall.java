@@ -13,13 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm;
+package com.n9mtq4.ld33.yatm.game.tiles;
+
+import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/21/15 at 9:07 PM.
+ * Created by will on 8/22/15 at 7:50 PM.
  */
-public enum Progress {
+public class HouseWall extends Tile {
 	
-	MAIN_MENU, IN_GAME, GAME_OVER
+	public HouseWall() {
+		super(Sprites.houseWall);
+	}
+	
+	@Override
+	public boolean isSolid(Entity entity) {
+		return true;
+	}
 	
 }

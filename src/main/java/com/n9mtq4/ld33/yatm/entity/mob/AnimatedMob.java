@@ -36,16 +36,12 @@ public class AnimatedMob extends Mob {
 	@Override
 	public void render(Screen screen) {
 		if (Direction.FORWARD.equals(dir)) {
-//			screen.renderSpriteRel(x, y, forward);
 			renderSpriteRel(screen, forward);
 		}else if (Direction.RIGHT.equals(dir)) {
-//			screen.renderSpriteRel(x, y, right);
 			renderSpriteRel(screen, right);
 		}else if (Direction.BACKWARDS.equals(dir)) {
-//			screen.renderSpriteRel(x, y, backwards);
 			renderSpriteRel(screen, backwards);
 		}else if (Direction.LEFT.equals(dir)) {
-//			screen.renderSpriteRel(x, y, left);
 			renderSpriteRel(screen, left);
 		}
 	}

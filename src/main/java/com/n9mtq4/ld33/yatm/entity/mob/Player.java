@@ -16,8 +16,6 @@
 package com.n9mtq4.ld33.yatm.entity.mob;
 
 import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.entity.Direction;
-import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
@@ -33,8 +31,8 @@ public class Player extends AnimatedMob {
 	
 	public Player(int x, int y, Display display, KeyBoard keyBoard) {
 		super(x * Screen.ABS_TILE_SIZE, y * Screen.ABS_TILE_SIZE);
-		this.x = x;
-		this.y = y;
+//		this.x = x;
+//		this.y = y;
 		this.display = display;
 		this.keyBoard = keyBoard;
 	}
@@ -46,6 +44,15 @@ public class Player extends AnimatedMob {
 		if (keyBoard.down) move(0, speed);
 		if (keyBoard.left) move(-speed, 0);
 		if (keyBoard.right) move(speed, 0);
+	}
+	
+	public void setSpawn(int x, int y) {
+		
+		this.x = x;
+		this.y = y;
+		this.spawnX = x;
+		this.spawnY = y;
+		
 	}
 	
 }

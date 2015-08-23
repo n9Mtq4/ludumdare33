@@ -15,21 +15,11 @@
 
 package com.n9mtq4.ld33.yatm.game;
 
-import com.n9mtq4.ld33.yatm.game.tiles.*;
-import com.n9mtq4.ld33.yatm.level.Tile;
-import com.n9mtq4.ld33.yatm.level.tile.VoidTile;
-
 /**
- * Created by will on 8/21/15 at 10:53 PM.
+ * Created by will on 8/21/15 at 9:07 PM.
  */
-public class Tiles {
+public enum Progress {
 	
-	public static final VoidTile voidTile = new VoidTile();
-	public static final WallTile wallTile = new WallTile();
-	public static final HouseWall houseWall = new HouseWall();
-	public static final LampTile lampTile = new LampTile();
-	public static final TanCarpet tanCarpet = new TanCarpet();
-	public static final Tile toiletTile = new Tile(Sprites.toiletTile);
-	public static final SeekerBarrierTile seekerBarrier = new SeekerBarrierTile();
+	MAIN_MENU, IN_GAME, CUT_SCENE, GAME_OVER
 	
 }

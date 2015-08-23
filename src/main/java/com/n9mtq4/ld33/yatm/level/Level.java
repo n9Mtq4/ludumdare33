@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.level;
 
 import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.entity.Light;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.game.Tiles;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
@@ -35,7 +36,8 @@ public class Level {
 	public int[] tiles;
 	public double[] lightMap;
 	public double darkness = 0.2d;
-	public double ambientLight = 0.0d;
+	public double ambientLight = 0.16d;
+	private String path;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
 	
@@ -46,7 +48,8 @@ public class Level {
 	}
 	
 	public Level(String path) {
-		loadLevel(path);
+//		loadLevel(path);
+		this.path = path;
 		generateLevel();
 	}
 	
@@ -77,6 +80,7 @@ public class Level {
 			}
 		}
 		
+		Light le = new Light();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 //				TODO: this next line works when it is backwards for some reason???
@@ -96,12 +100,32 @@ public class Level {
 							int xd2 = (int) Math.pow(xd, 2);
 							int yd2 = (int) Math.pow(yd, 2);
 							double distance = Math.sqrt(xd2 + yd2);
+/*//							now make sure the light can't pass through walls
+							boolean blockedByWall = false;
+							double dx = x - x1;
+							double dy = y - y1;
+							double dir = Math.atan2(dy, dx);
+							double nx = Math.cos(dir);
+							double ny = Math.sin(dir);
+//							now increment until it hits the tile.
+							double cx = x;
+							double cy = y;
+							while ((int) cx != x1 && (int) cy != y1) {
+								cx += nx;
+								cy += ny;
+								if (getTile((int) cx, (int) cy).isSolid(le)) {
+									blockedByWall = true;
+									break;
+								}
+							}
+							if (blockedByWall) continue;*/
 //							divide the distance by the darkness
 							double dTimesD = distance * darkness;
 //							light += getTile(x1, y1).getSourceLight() - addLight;
 							double newLight = getTile(x1, y1).getSourceLight() - dTimesD;
 //							light += getTile(x1, y1).getSourceLight() - dTimesD;
 							if (newLight > ambientLight) light += newLight;
+							if (light > 1) light = 1;
 						}
 					}
 				}
@@ -115,6 +139,10 @@ public class Level {
 	
 	public void generateLevel() {
 		generateLightMap();
+	}
+	
+	public void load() {
+		loadLevel(path);
 	}
 	
 	public void loadLevel(String path) {
@@ -188,8 +216,8 @@ public class Level {
 	}
 	
 	public Tile getTile(int x, int y) {
-		return (x == 4 && y == 4) ? Tiles.lampTile : Tiles.voidTile; //TODO: not engine
-//		return Tiles.voidTile;
+//		return (x == 4 && y == 4) ? Tiles.lampTile : Tiles.voidTile; //TODO: not engine
+		return Tiles.voidTile;
 	}
 	
 	public double getLightValue(int x, int y) {

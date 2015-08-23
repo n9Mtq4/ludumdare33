@@ -16,6 +16,8 @@
 package com.n9mtq4.ld33.yatm;
 
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.game.Progress;
+import com.n9mtq4.ld33.yatm.game.level.House;
 import com.n9mtq4.ld33.yatm.game.mob.Monster;
 import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
@@ -35,9 +37,9 @@ import java.awt.image.DataBufferInt;
  */
 public class Display extends Canvas implements Runnable, MouseListener, MouseMotionListener {
 	
-	public static final int WIDTH = 720;
+	public static final int WIDTH = 360;
 	public static final int HEIGHT = (WIDTH / 16) * 9; // 16:9
-	public static final int SCALE = 1;
+	public static final int SCALE = 4;
 	public static final double GAME_SPEED = 60.0d;
 	public static final boolean DEBUG = true;
 	
@@ -64,9 +66,12 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		initListeners();
 		
-		player = new MonsterPlayer(0, 0, this, keyBoard, Monster.FLYING);
-		level = new Level(8, 8);
+		player = new MonsterPlayer(32, 2, this, keyBoard, Monster.FLYING);
+		level = new House("floor1");
 		level.add(player);
+		level.load();
+		
+		requestFocus();
 		
 	}
 	
@@ -150,6 +155,8 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 			renderGame();
 		}else if (progress.equals(Progress.GAME_OVER)) {
 			renderGameOver();
+		}else if (progress.equals(Progress.CUT_SCENE)) {
+//			TODO: render cut scene
 		}else if (progress.equals(Progress.MAIN_MENU)) {
 			renderMenu();
 		}
@@ -160,6 +167,8 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		keyBoard.update();
 		level.tick();
+//		too slow, so light map can't be dynamic
+//		level.updateLightMap();
 		
 	}
 	
