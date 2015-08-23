@@ -29,7 +29,18 @@ public class Tiles {
 	public static final HouseWall houseWall = new HouseWall();
 	public static final LampTile lampTile = new LampTile();
 	public static final TanCarpet tanCarpet = new TanCarpet();
+	public static final RedBedTile redBedTile = new RedBedTile();
+	public static final WhiteBedTile whiteBedTile = new WhiteBedTile();
+	public static final Tile tableSide = new Tile(Sprites.table);
+	public static final Tile stainedWood = new Tile(Sprites.stainedWood);
 	public static final Tile toiletTile = new Tile(Sprites.toiletTile);
+	public static final Tile sinkTop = new Tile(Sprites.sinkTop);
+	public static final Tile sinkRight = new Tile(Sprites.sinkRight);
+	public static final Tile sinkBottom = new Tile(Sprites.sinkBottom);
+	public static final Tile sinkLeft = new Tile(Sprites.sinkLeft);
+	public static final Tile stove = new SolidTile(Sprites.stove);
+	public static final Tile water = new SolidTile(Sprites.water);
+	public static final Tile tile = new Tile(Sprites.tile);
 	public static final SeekerBarrierTile seekerBarrier = new SeekerBarrierTile();
 	
 }

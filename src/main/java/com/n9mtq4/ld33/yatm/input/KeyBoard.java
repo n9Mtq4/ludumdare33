@@ -15,6 +15,8 @@
 
 package com.n9mtq4.ld33.yatm.input;
 
+import com.n9mtq4.ld33.yatm.Display;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -25,6 +27,11 @@ public class KeyBoard implements KeyListener {
 	
 	private boolean[] keys = new boolean[180]; // 128 keys
 	public boolean up, down, left, right, ability, change;
+	private Display display;
+	
+	public KeyBoard(Display display) {
+		this.display = display;
+	}
 	
 	public boolean hasKeyBeenPressed(int keyCode) {
 		return keys[keyCode];
@@ -43,11 +50,11 @@ public class KeyBoard implements KeyListener {
 	
 	@Override
 	public void keyTyped(KeyEvent keyEvent) {
-		
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent keyEvent) {
+		display.keyPress(keyEvent);
 		keys[keyEvent.getKeyCode()] = true;
 	}
 	

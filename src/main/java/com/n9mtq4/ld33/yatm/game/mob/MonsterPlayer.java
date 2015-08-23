@@ -17,8 +17,11 @@ package com.n9mtq4.ld33.yatm.game.mob;
 
 import com.n9mtq4.ld33.yatm.Display;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
+import com.n9mtq4.ld33.yatm.game.Progress;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.event.KeyEvent;
 
 /**
@@ -43,17 +46,30 @@ public class MonsterPlayer extends Player {
 		
 	}
 	
+	public void inBed() {
+//		TODO: win condition
+		System.out.println("IN BED");
+	}
+	
+	public void changeMonster() {
+		if (type == Monster.GREEN_BLOB) {
+			type = Monster.FLYING;
+		}else if (type == Monster.FLYING) {
+			type = Monster.GREEN_BLOB;
+		}
+		try {
+			display.soundManager.playSound(display.sounds.get("wish"));
+		}catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		initSprites();
+	}
+	
 	@Override
 	public void tick() {
 		super.tick();
-		if (keyBoard.change) {
-			if (type == Monster.GREEN_BLOB) {
-				type = Monster.FLYING;
-			}else if (type == Monster.FLYING) {
-				type = Monster.GREEN_BLOB;
-			}
-			initSprites();
-		}
 	}
 	
 	public Monster getType() {

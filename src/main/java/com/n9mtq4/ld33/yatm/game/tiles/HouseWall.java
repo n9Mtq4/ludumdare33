@@ -15,22 +15,15 @@
 
 package com.n9mtq4.ld33.yatm.game.tiles;
 
-import com.n9mtq4.ld33.yatm.entity.Entity;
 import com.n9mtq4.ld33.yatm.game.Sprites;
-import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
  * Created by will on 8/22/15 at 7:50 PM.
  */
-public class HouseWall extends Tile {
+public class HouseWall extends SolidTile {
 	
 	public HouseWall() {
 		super(Sprites.houseWall);
-	}
-	
-	@Override
-	public boolean isSolid(Entity entity) {
-		return true;
 	}
 	
 }

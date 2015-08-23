@@ -30,15 +30,24 @@ public class Sprites {
 	public static final SpriteSheet monsters = new SpriteSheet("/textures/monsters.png", 256);
 	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
 	
-	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 255, 255));
+	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(0, 0, 0));
 	public static final Sprite wallTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(100, 100, 100));
 	public static final Sprite houseWall = wallTile;
+	public static final Sprite redBed = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 0, 0));
+	public static final Sprite whiteBed = new Sprite(Screen.ABS_TILE_SIZE, new Color(255, 255, 255));
 	public static final Sprite lampTile = new Sprite(Screen.ABS_TILE_SIZE, 0, 0, tiles);
 	public static final Sprite carpetGray = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, tiles);
 	public static final Sprite carpetTan = new Sprite(Screen.ABS_TILE_SIZE, 1, 1, tiles);
 	public static final Sprite stainedWood = new Sprite(Screen.ABS_TILE_SIZE, 2, 0, tiles);
 	public static final Sprite table = new Sprite(Screen.ABS_TILE_SIZE, 3, 0, tiles);
 	public static final Sprite toiletTile = new Sprite(Screen.ABS_TILE_SIZE, 0, 1, tiles);
+	public static final Sprite sinkTop = new Sprite(Screen.ABS_TILE_SIZE, 2, 1, tiles);
+	public static final Sprite sinkRight = new Sprite(Screen.ABS_TILE_SIZE, 3, 1, tiles);
+	public static final Sprite sinkBottom = new Sprite(Screen.ABS_TILE_SIZE, 4, 1, tiles);
+	public static final Sprite sinkLeft = new Sprite(Screen.ABS_TILE_SIZE, 5, 1, tiles);
+	public static final Sprite stove = new Sprite(Screen.ABS_TILE_SIZE, 6, 1, tiles);
+	public static final Sprite water = new Sprite(Screen.ABS_TILE_SIZE, 7, 1, tiles);
+	public static final Sprite tile = new Sprite(Screen.ABS_TILE_SIZE, 5, 0, tiles);
 	
 	public static final AnimatedSprite monster1b = getAnimatedSprite(0, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1f = getAnimatedSprite(1, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);

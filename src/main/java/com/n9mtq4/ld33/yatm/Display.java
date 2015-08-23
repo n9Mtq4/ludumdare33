@@ -15,6 +15,7 @@
 
 package com.n9mtq4.ld33.yatm;
 
+import com.n9mtq4.ld33.yatm.audio.SoundManager;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.game.Progress;
 import com.n9mtq4.ld33.yatm.game.level.House;
@@ -26,22 +27,30 @@ import com.n9mtq4.ld33.yatm.input.KeyBoard;
 import com.n9mtq4.ld33.yatm.level.Level;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by will on 8/21/15 at 9:03 PM.
  */
 public class Display extends Canvas implements Runnable, MouseListener, MouseMotionListener {
 	
-	public static final int WIDTH = 360;
-	public static final int HEIGHT = (WIDTH / 16) * 9; // 16:9
-	public static final int SCALE = 4;
+	public static int WIDTH = 360;
+	public static int HEIGHT = (WIDTH / 16) * 9; // 16:9
+	public static int SCALE = 2;
 	public static final double GAME_SPEED = 60.0d;
 	public static final boolean DEBUG = true;
+	
+	public static Monster monsterType = Monster.FLYING;
+	public static String levelName = "floor1";
 	
 	private Thread thread;
 	private boolean running;
@@ -50,9 +59,13 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	private Screen screen;
 	private Hud hud;
 	public Level level;
-	private Player player;
+	private MonsterPlayer player;
 	private KeyBoard keyBoard;
-	private Progress progress;
+	public Progress progress;
+	public SoundManager soundManager;
+	public HashMap<String, Integer> sounds;
+	public Clip music;
+	public boolean musicPlaying = false;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -64,10 +77,13 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		setPreferredSize(size);
 		this.screen = new Screen(WIDTH, HEIGHT);
 		
+		soundManager = new SoundManager();
+		sounds = new HashMap<String, Integer>();
+		initSound();
 		initListeners();
 		
-		player = new MonsterPlayer(32, 2, this, keyBoard, Monster.FLYING);
-		level = new House("floor1");
+		player = new MonsterPlayer(32, 2, this, keyBoard, monsterType);
+		level = new House(levelName);
 		level.add(player);
 		level.load();
 		
@@ -75,8 +91,42 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 	}
 	
+	public void playMusic() {
+		if (musicPlaying) return;
+		try {
+			music = soundManager.playSound(sounds.get("music1"));
+			music.loop(Clip.LOOP_CONTINUOUSLY);
+			musicPlaying = true;
+		}catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void stopMusic() {
+		if (!musicPlaying) return;
+		musicPlaying = false;
+		if (music != null) music.stop();
+	}
+	
+	private void initSound() {
+		try {
+			sounds.put("vrrm", soundManager.addClip("/sound/vrrm.wav"));
+			sounds.put("whoosh", soundManager.addClip("/sound/whoosh.wav"));
+			sounds.put("wish", soundManager.addClip("/sound/wish.wav"));
+			sounds.put("music1", soundManager.addClip("/sound/music.wav"));
+		}catch (IOException e) {
+			e.printStackTrace();
+		}catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void initListeners() {
-		this.keyBoard = new KeyBoard();
+		this.keyBoard = new KeyBoard(this);
 		addKeyListener(keyBoard);
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -87,6 +137,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		if (thread != null) stop();
 		running = true;
 //		initBuffer();
+		playMusic();
 		thread = new Thread(this, "Game Thread");
 		thread.start();
 		
@@ -96,6 +147,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		try {
 			running = false;
+			stopMusic();
 			if (thread != null) thread.join();
 		}catch (InterruptedException e) {
 			e.printStackTrace();
@@ -277,4 +329,15 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 	}
 	
+	public void keyPress(KeyEvent keyEvent) {
+		if (keyEvent.getKeyCode() == KeyEvent.VK_M) {
+			if (this.musicPlaying) {
+				this.stopMusic();
+			}else {
+				this.playMusic();
+			}
+		}else if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
+			player.changeMonster();
+		}
+	}
 }

@@ -21,15 +21,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Vector;
 
-/*
- * IGNORE THE COPYRIGHT AT THE TOP OF THE FILE.<BR>
- * TAKEN FROM oNyx at https://web.archive.org/web/20150822035212/http://www.java-gaming.org/index.php?topic=1948.0
- * */
 @SuppressWarnings("unchecked")
 public class SoundManager {
-	private javax.sound.sampled.Line.Info lineInfo;
 	
 	private Vector afs;
 	private Vector sizes;
@@ -46,9 +42,9 @@ public class SoundManager {
 	
 	public int addClip(String s)
 			throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-		URL url = getClass().getResource(s);
+		InputStream in = getClass().getResourceAsStream(s);
 		//InputStream inputstream = url.openStream();
-		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loadStream(url.openStream()));
+		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loadStream(in));
 		AudioFormat af = audioInputStream.getFormat();
 		int size = (int) (af.getFrameSize() * audioInputStream.getFrameLength());
 		byte[] audio = new byte[size];
@@ -56,7 +52,7 @@ public class SoundManager {
 		audioInputStream.read(audio, 0, size);
 		
 		afs.add(af);
-		sizes.add(new Integer(size));
+		sizes.add(size);
 		infos.add(info);
 		audios.add(audio);
 		
@@ -78,7 +74,7 @@ public class SoundManager {
 		return new ByteArrayInputStream(data);
 	}
 	
-	public void playSound(int x)
+	public Clip playSound(int x)
 			throws UnsupportedAudioFileException, LineUnavailableException {
 		if (x > num) {
 			System.out.println("playSound: sample nr[" + x + "] is not available");
@@ -86,7 +82,9 @@ public class SoundManager {
 			Clip clip = (Clip) AudioSystem.getLine((DataLine.Info) infos.elementAt(x));
 			clip.open((AudioFormat) afs.elementAt(x), (byte[]) audios.elementAt(x), 0, ((Integer) sizes.elementAt(x)).intValue());
 			clip.start();
+			return  clip;
 		}
+		return null;
 	}
 	
 }

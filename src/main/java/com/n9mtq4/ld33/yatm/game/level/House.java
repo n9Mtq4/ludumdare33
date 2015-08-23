@@ -43,6 +43,18 @@ public class House extends Level {
 		if (tiles[x + y * width] == 0xff0000ff) return Tiles.lampTile;
 		if (tiles[x + y * width] == 0xffffffff) return Tiles.tanCarpet;
 		if (tiles[x + y * width] == 0xff050000) return Tiles.toiletTile;
+		if (tiles[x + y * width] == 0xff060100) return Tiles.sinkTop;
+		if (tiles[x + y * width] == 0xff060200) return Tiles.sinkLeft;
+		if (tiles[x + y * width] == 0xff060300) return Tiles.sinkBottom;
+		if (tiles[x + y * width] == 0xff060400) return Tiles.sinkRight;
+		if (tiles[x + y * width] == 0xff070000) return Tiles.stainedWood;
+		if (tiles[x + y * width] == 0xff080000) return Tiles.stainedWood;
+		if (tiles[x + y * width] == 0xff090000) return Tiles.stainedWood;
+		if (tiles[x + y * width] == 0xff0a0000) return Tiles.stove;
+		if (tiles[x + y * width] == 0xfffe0000) return Tiles.redBedTile;
+		if (tiles[x + y * width] == 0xfffefffe) return Tiles.whiteBedTile;
+		if (tiles[x + y * width] == 0xff0b0000) return Tiles.water;
+		if (tiles[x + y * width] == 0xff0c0000) return Tiles.tile;
 		if (tiles[x + y * width] == 0xff640064) spawnMob(x, y);
 		
 //		return Tiles.voidTile;
