@@ -39,13 +39,18 @@ public class Mob extends Entity {
 	public Mob(int x, int y) {
 		this.spawnX = x;
 		this.spawnY = y;
-		this.x = x;
-		this.y = y;
+		this.x = x * Screen.ABS_TILE_SIZE;
+		this.y = y * Screen.ABS_TILE_SIZE;
 	}
 	
 	@Override
 	public void init(Level level) {
 		super.init(level);
+	}
+	
+	@Override
+	public void render(Screen screen) {
+		renderSpriteRel(screen, sprite);
 	}
 	
 	public void tick() {
@@ -66,8 +71,8 @@ public class Mob extends Entity {
 	public void move(int xd, int yd) {
 		
 		if (xd != 0 && yd != 0) {
-			move(xd, 0);
 			move(0, yd);
+			move(xd, 0);
 			return;
 		}
 		
@@ -96,7 +101,7 @@ public class Mob extends Entity {
 	}
 	
 	protected int getDistance(Entity e1, Entity e2) {
-		return getDistance(e1.x, e1.y, e2.x, e2.y);
+		return getDistance(e1.x / Screen.ABS_TILE_SIZE, e1.y / Screen.ABS_TILE_SIZE, e2.x / Screen.ABS_TILE_SIZE, e2.y / Screen.ABS_TILE_SIZE);
 	}
 	
 	protected int getDistance(int x1, int y1, int x2, int y2) {

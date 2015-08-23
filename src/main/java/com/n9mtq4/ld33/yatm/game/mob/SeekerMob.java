@@ -15,28 +15,36 @@
 
 package com.n9mtq4.ld33.yatm.game.mob;
 
-import com.n9mtq4.ld33.yatm.entity.Entity;
-import com.n9mtq4.ld33.yatm.entity.mob.AnimatedMob;
+import com.n9mtq4.ld33.yatm.entity.mob.Mob;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.graphics.Sprite;
 
 import java.util.Random;
 
 /**
  * Created by will on 8/22/15 at 4:12 PM.
  */
-public class SeekerMob extends AnimatedMob {
+public class SeekerMob extends Mob {
 	
 	private static final Random RANDOM = new Random();
+	private static final Sprite[] sprites = {Sprites.guard1, Sprites.guard2};
 	
-	private Entity lockedOnto;
+	private MonsterPlayer lockedOnto;
 	
 	public SeekerMob(int x, int y) {
 		super(x, y);
+		sprite = sprites[RANDOM.nextInt(sprites.length)];
 	}
 	
 	@Override
 	public void tick() {
 		super.tick();
-		randomMovementAi();
+		if (lockedOnto == null) lockedOnto = (MonsterPlayer) level.getPlayer();
+		if (canSee(lockedOnto)) {
+			chaiserAi();
+		}else {
+			randomMovementAi();
+		}
 	}
 	
 	public void randomMovementAi() {
@@ -52,18 +60,21 @@ public class SeekerMob extends AnimatedMob {
 	}
 	
 	public void chaiserAi() {
-		if (lockedOnto == null) lockedOnto = level.getPlayer();
-		if (canSee(lockedOnto)) {
-			if (x > lockedOnto.x) xd--;
-			if (x < lockedOnto.x) xd++;
-			if (y > lockedOnto.y) yd--;
-			if (y < lockedOnto.y) yd++;
-			move(xd, yd);
-		}
+		int xd = 0;
+		int yd = 0;
+		if (x > lockedOnto.x) xd--;
+		if (x < lockedOnto.x) xd++;
+		if (y > lockedOnto.y) yd--;
+		if (y < lockedOnto.y) yd++;
+		move(xd, yd);
 	}
 	
-	private boolean canSee(Entity entity) {
-		return true;
+	private boolean canSee(MonsterPlayer player) {
+		if (player.invisible) return false;
+		int d = getDistance(player, this);
+		if (d <= 2) return true;
+		if (d <= 5) if (player.getLightLevel() > 0.4d) return true;
+		return false;
 	}
 	
 }

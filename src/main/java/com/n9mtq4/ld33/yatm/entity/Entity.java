@@ -46,6 +46,10 @@ public abstract class Entity {
 		screen.renderSpriteAbs(x, y, x / Screen.ABS_TILE_SIZE, y / Screen.ABS_TILE_SIZE, sprite, level);
 	}
 	
+	public double getLightLevel() {
+		return level.getLightValue(x / Screen.ABS_TILE_SIZE, y / Screen.ABS_TILE_SIZE);
+	}
+	
 	public void tick() {
 		
 	}

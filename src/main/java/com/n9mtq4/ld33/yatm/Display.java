@@ -21,6 +21,7 @@ import com.n9mtq4.ld33.yatm.game.Progress;
 import com.n9mtq4.ld33.yatm.game.level.House;
 import com.n9mtq4.ld33.yatm.game.mob.Monster;
 import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
+import com.n9mtq4.ld33.yatm.game.mob.SeekerMob;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
@@ -88,6 +89,9 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		level = new House(levelName);
 		level.add(player);
 		level.load();
+		
+		SeekerMob a = new SeekerMob(32, 3);
+		level.add(a);
 		
 		requestFocus();
 		

@@ -13,45 +13,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.entity.mob;
+package com.n9mtq4.ld33.yatm.game.tiles;
 
-import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.graphics.Screen;
-import com.n9mtq4.ld33.yatm.input.KeyBoard;
+import com.n9mtq4.ld33.yatm.entity.mob.Mob;
+import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
+import com.n9mtq4.ld33.yatm.graphics.Sprite;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/21/15 at 9:55 PM.
+ * Created by will on 8/22/15 at 9:42 PM.
  */
-public class Player extends AnimatedMob {
+public class BedTile extends Tile {
 	
-	public Display display;
-	protected int speed = 2;
-	
-	protected KeyBoard keyBoard;
-	
-	public Player(int x, int y, Display display, KeyBoard keyBoard) {
-		super(x, y);
-//		this.x = x;
-//		this.y = y;
-		this.display = display;
-		this.keyBoard = keyBoard;
+	public BedTile(Sprite sprite) {
+		super(sprite);
 	}
 	
 	@Override
-	public void tick() {
-		super.tick();
-		if (keyBoard.up) move(0, -speed);
-		if (keyBoard.down) move(0, speed);
-		if (keyBoard.left) move(-speed, 0);
-		if (keyBoard.right) move(speed, 0);
-	}
-	
-	public void setSpawn(int x, int y) {
+	public void mobIn(Mob mob) {
+		super.mobIn(mob);
 		
-		this.x = x;
-		this.y = y;
-		this.spawnX = x;
-		this.spawnY = y;
+		if (mob instanceof MonsterPlayer) {
+			((MonsterPlayer) mob).inBed();
+		}
 		
 	}
 	

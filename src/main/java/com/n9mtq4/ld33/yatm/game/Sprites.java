@@ -27,6 +27,7 @@ public class Sprites {
 	public static final SpriteSheet monsters = new SpriteSheet("/textures/monsters.png", 256);
 	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
 	public static final SpriteSheet hud = new SpriteSheet("/textures/hud.png", 32);
+	public static final SpriteSheet mobs = new SpriteSheet("/textures/mobs.png", 256);
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(0, 0, 0));
 	public static final Sprite wallTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(100, 100, 100));
@@ -47,6 +48,9 @@ public class Sprites {
 	public static final Sprite water = new Sprite(Screen.ABS_TILE_SIZE, 7, 1, tiles);
 	public static final Sprite tile = new Sprite(Screen.ABS_TILE_SIZE, 5, 0, tiles);
 	
+	public static final Sprite guard1 = new Sprite(Screen.ABS_TILE_SIZE, 0, 0, mobs);
+	public static final Sprite guard2 = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, mobs);
+	
 	public static final Sprite manabarStartFull = new NoLightSprite(8, 0, 0, hud);
 	public static final Sprite manabarMidFull = new NoLightSprite(8, 1, 0, hud);
 	public static final Sprite manabarEndFull = new NoLightSprite(8, 2, 0, hud);
@@ -63,9 +67,6 @@ public class Sprites {
 	public static final AnimatedSprite monster1if = getAnimatedSprite(1, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1il = getAnimatedSprite(2, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1ir = getAnimatedSprite(3, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
-//	public static final AnimatedSprite monster1if = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 2, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
-//	public static final AnimatedSprite monster1il = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 3, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
-//	public static final AnimatedSprite monster1ir = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 4, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
 	
 	public static final AnimatedSprite monster2b = getAnimatedSprite(4, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster2f = getAnimatedSprite(5, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
