@@ -13,38 +13,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.graphics;
+package com.n9mtq4.ld33.yatm.game.mob;
 
 /**
- * Created by will on 8/21/15 at 10:22 PM.
+ * Created by will on 8/23/15 at 2:16 AM.
  */
-public class AnimatedSprite extends Sprite {
+public enum MonsterAbility {
 	
-	private int frameTick;
-	private int frame;
-	private int frameRate;
-	private Sprite[] frames;
+	INVIBILITY(60 * 10, 60 * 40), 
+	SPEED(60 * 10, 60 * 40);
 	
-	public AnimatedSprite(Sprite[] frames, int width, int height, int frameRate) {
-		super(width, height);
-		this.frames = frames;
-		this.frame = 0;
-		this.frameRate = frameRate;
-		this.frameTick = 0;
+	private int time;
+	private int cooldown;
+	
+	MonsterAbility(int time, int cooldown) {
+		this.time = time;
+		this.cooldown = cooldown;
 	}
 	
-	@Override
-	public void tick() {
-		if (frameTick - frameRate == 0) {
-			frameTick = 0;
-			frame = frame < frames.length - 1 ? frame + 1 : 0;
-		}
-		frameTick++;
+	public int getTime() {
+		return time;
 	}
 	
-	@Override
-	public Sprite getSprite() {
-		return frames[frame];
+	public int getCooldown() {
+		return cooldown;
 	}
 	
 }

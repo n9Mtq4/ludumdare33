@@ -15,8 +15,30 @@
 
 package com.n9mtq4.ld33.yatm.hud;
 
+import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
+import com.n9mtq4.ld33.yatm.graphics.Screen;
+
 /**
  * Created by will on 8/21/15 at 9:55 PM.
  */
 public class Hud {
+	
+	public ManaBar manaBar = new ManaBar();
+	
+	public void tick(MonsterPlayer player) {
+		if (player.notAbility) {
+//			show mana recharging
+			manaBar.mana = player.cooldownTime;
+			manaBar.maxMana = player.ability.getCooldown();
+		}else {
+//			show time left on ability
+			manaBar.mana = player.time;
+			manaBar.maxMana = player.ability.getTime();
+		}
+	}
+	
+	public void render(Screen screen) {
+		manaBar.render(screen);
+	}
+	
 }

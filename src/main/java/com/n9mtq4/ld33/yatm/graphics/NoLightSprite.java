@@ -15,36 +15,26 @@
 
 package com.n9mtq4.ld33.yatm.graphics;
 
+import java.awt.*;
+
 /**
- * Created by will on 8/21/15 at 10:22 PM.
+ * Created by will on 8/23/15 at 2:29 AM.
  */
-public class AnimatedSprite extends Sprite {
+public class NoLightSprite extends Sprite {
 	
-	private int frameTick;
-	private int frame;
-	private int frameRate;
-	private Sprite[] frames;
+	public NoLightSprite(int size, Color color) {
+		super(size, color);
+		effectedByLight = false;
+	}
 	
-	public AnimatedSprite(Sprite[] frames, int width, int height, int frameRate) {
+	public NoLightSprite(int width, int height) {
 		super(width, height);
-		this.frames = frames;
-		this.frame = 0;
-		this.frameRate = frameRate;
-		this.frameTick = 0;
+		effectedByLight = false;
 	}
 	
-	@Override
-	public void tick() {
-		if (frameTick - frameRate == 0) {
-			frameTick = 0;
-			frame = frame < frames.length - 1 ? frame + 1 : 0;
-		}
-		frameTick++;
-	}
-	
-	@Override
-	public Sprite getSprite() {
-		return frames[frame];
+	public NoLightSprite(int size, int x, int y, SpriteSheet sheet) {
+		super(size, x, y, sheet);
+		effectedByLight = false;
 	}
 	
 }

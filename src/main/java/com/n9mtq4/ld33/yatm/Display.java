@@ -49,7 +49,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	public static final double GAME_SPEED = 60.0d;
 	public static final boolean DEBUG = true;
 	
-	public static Monster monsterType = Monster.FLYING;
+	public static Monster monsterType = Monster.GREEN_BLOB;
 	public static String levelName = "floor1";
 	
 	private Thread thread;
@@ -82,6 +82,8 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		initSound();
 		initListeners();
 		
+		hud = new Hud();
+		
 		player = new MonsterPlayer(32, 2, this, keyBoard, monsterType);
 		level = new House(levelName);
 		level.add(player);
@@ -89,6 +91,16 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		requestFocus();
 		
+	}
+	
+	public void playSound(String sound) {
+		try {
+			soundManager.playSound(sounds.get(sound));
+		}catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void playMusic() {
@@ -184,6 +196,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		int xScroll = player.x - screen.width / 2;
 		int yScroll = player.y - screen.height / 2;
 		level.render(xScroll, yScroll, screen);
+		hud.render(screen);
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
@@ -219,6 +232,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		keyBoard.update();
 		level.tick();
+		hud.tick(player);
 //		too slow, so light map can't be dynamic
 //		level.updateLightMap();
 		
@@ -338,6 +352,8 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 			}
 		}else if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
 			player.changeMonster();
+		}else if (keyEvent.getKeyCode() == KeyEvent.VK_E) {
+			player.ability();
 		}
 	}
 }

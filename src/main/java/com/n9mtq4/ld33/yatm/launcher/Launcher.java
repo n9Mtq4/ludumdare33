@@ -100,7 +100,7 @@ public class Launcher {
 		monster = new JComboBox(new Object[]{"Hareeny", "Chair"});
 		levels = new JComboBox(new Object[]{"floor1"});
 		gameSettingsPanel = new JPanel(new GridLayout(2, 2));
-		gameSettingsPanel.add(new JLabel("You Monster"));
+		gameSettingsPanel.add(new JLabel("Your Monster"));
 		gameSettingsPanel.add(new JLabel("The Level"));
 		gameSettingsPanel.add(monster);
 		gameSettingsPanel.add(levels);
@@ -131,6 +131,7 @@ public class Launcher {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		settingsPanel.setVisible(false);
 		frame.getRootPane().setDefaultButton(start);
 		
 	}
@@ -176,7 +177,7 @@ public class Launcher {
 				openSource();
 			}else if (source.getText().equalsIgnoreCase("settings")) {
 //				TODO: screen settings
-				
+				settingsPanel.setVisible(!settingsPanel.isVisible());
 			}
 		}
 	}

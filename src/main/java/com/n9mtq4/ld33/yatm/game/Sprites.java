@@ -15,10 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.game;
 
-import com.n9mtq4.ld33.yatm.graphics.AnimatedSprite;
-import com.n9mtq4.ld33.yatm.graphics.Screen;
-import com.n9mtq4.ld33.yatm.graphics.Sprite;
-import com.n9mtq4.ld33.yatm.graphics.SpriteSheet;
+import com.n9mtq4.ld33.yatm.graphics.*;
 
 import java.awt.Color;
 
@@ -29,6 +26,7 @@ public class Sprites {
 	
 	public static final SpriteSheet monsters = new SpriteSheet("/textures/monsters.png", 256);
 	public static final SpriteSheet tiles = new SpriteSheet("/textures/tiles.png", 256);
+	public static final SpriteSheet hud = new SpriteSheet("/textures/hud.png", 32);
 	
 	public static final Sprite voidTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(0, 0, 0));
 	public static final Sprite wallTile = new Sprite(Screen.ABS_TILE_SIZE, new Color(100, 100, 100));
@@ -49,10 +47,25 @@ public class Sprites {
 	public static final Sprite water = new Sprite(Screen.ABS_TILE_SIZE, 7, 1, tiles);
 	public static final Sprite tile = new Sprite(Screen.ABS_TILE_SIZE, 5, 0, tiles);
 	
+	public static final Sprite manabarStartFull = new NoLightSprite(8, 0, 0, hud);
+	public static final Sprite manabarMidFull = new NoLightSprite(8, 1, 0, hud);
+	public static final Sprite manabarEndFull = new NoLightSprite(8, 2, 0, hud);
+	public static final Sprite manabarStartEmpty = new NoLightSprite(8, 0, 1, hud);
+	public static final Sprite manabarMidEmpty = new NoLightSprite(8, 1, 1, hud);
+	public static final Sprite manabarEndEmpty = new NoLightSprite(8, 2, 1, hud);
+	
 	public static final AnimatedSprite monster1b = getAnimatedSprite(0, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1f = getAnimatedSprite(1, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1l = getAnimatedSprite(2, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1r = getAnimatedSprite(3, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
+	
+	public static final AnimatedSprite monster1ib = getAnimatedSprite(0, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1if = getAnimatedSprite(1, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1il = getAnimatedSprite(2, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1ir = getAnimatedSprite(3, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
+//	public static final AnimatedSprite monster1if = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 2, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
+//	public static final AnimatedSprite monster1il = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 3, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
+//	public static final AnimatedSprite monster1ir = new AnimatedSprite(new Sprite[]{new Sprite(Screen.ABS_TILE_SIZE, 4, 2, monsters)}, Screen.ABS_TILE_SIZE, Screen.ABS_TILE_SIZE, 60);
 	
 	public static final AnimatedSprite monster2b = getAnimatedSprite(4, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster2f = getAnimatedSprite(5, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
@@ -67,8 +80,8 @@ public class Sprites {
 		
 		Sprite[] frames = new Sprite[Math.abs(x1 - x2)];
 		
-		for (int x = x1; x < x2; x++) {
-			frames[x] = new Sprite(size, x, y, sheet);
+		for (int x = 0; x + x1 < x2; x++) {
+			frames[x] = new Sprite(size, x + x1, y, sheet);
 		}
 		
 		return new AnimatedSprite(frames, size, size, framerate);
