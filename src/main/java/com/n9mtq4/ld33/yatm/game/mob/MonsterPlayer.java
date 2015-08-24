@@ -18,9 +18,6 @@ package com.n9mtq4.ld33.yatm.game.mob;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 /**
  * Created by will on 8/22/15 at 1:31 PM.
  */

@@ -17,7 +17,7 @@ package com.n9mtq4.ld33.yatm.game;
 
 import com.n9mtq4.ld33.yatm.graphics.*;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Created by will on 8/21/15 at 10:52 PM.

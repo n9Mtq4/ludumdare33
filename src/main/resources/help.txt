@@ -11,7 +11,7 @@ while avoiding guards.
 
 Controls:
 WASD or arrow keys to move
-E to use monsters ability
+E to use monster's ability
 M to toggle music
 
 Tips:

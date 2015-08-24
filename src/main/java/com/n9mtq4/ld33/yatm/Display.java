@@ -23,7 +23,6 @@ import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
-import com.n9mtq4.ld33.yatm.launcher.TextAreaWindow;
 import com.n9mtq4.ld33.yatm.level.Level;
 import com.n9mtq4.ld33.yatm.sound.SoundManager;
 
@@ -32,13 +31,14 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashMap;
 
 /**
