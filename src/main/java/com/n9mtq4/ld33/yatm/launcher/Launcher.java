@@ -25,7 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -40,6 +40,18 @@ public class Launcher {
 		new Launcher();
 	}
 	
+	private void error(Throwable throwable) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		throwable.printStackTrace(pw);
+		String error = sw.toString();
+		String info = System.getProperties().toString();
+		TextAreaWindow w = new TextAreaWindow("Error", "I am sorry. Some error has occured!\n" +
+				"If you would be so kind as to send an email to n9mtq4@n9mtq4.com with the following\n" +
+				"information, I would be grateful, and I might be able to fix the issue.\n\n" +
+				"" + info + "\n\n" + error, new Dimension(300, 300), null);
+	}
+	
 	private static void openSource() {
 		try {
 			Desktop.getDesktop().browse(new URL("https://github.com/n9Mtq4/ludumdare33").toURI());
@@ -52,7 +64,7 @@ public class Launcher {
 	
 	private JFrame frame;
 	private JButton start;
-	private JButton settings;
+	private JButton help;
 	private JButton source;
 	private JButton exit;
 	private JComboBox monster;
@@ -66,7 +78,22 @@ public class Launcher {
 	private JTextField windowScale;
 	
 	public Launcher() {
-		gui();
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}catch (InstantiationException e) {
+			e.printStackTrace();
+		}catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		try {
+			gui();
+		}catch (Exception e) {
+			error(e);
+		}
 	}
 	
 	private void gui() {
@@ -75,12 +102,12 @@ public class Launcher {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		start = new JButton("Launch");
-		settings = new JButton("Settings");
+		help = new JButton("README");
 		source = new JButton("View Source");
 		exit = new JButton("Exit");
 		
 		start.addActionListener(new ButtonListener());
-		settings.addActionListener(new ButtonListener());
+		help.addActionListener(new ButtonListener());
 		source.addActionListener(new ButtonListener());
 		exit.addActionListener(new ButtonListener());
 		
@@ -98,7 +125,7 @@ public class Launcher {
 		}
 		
 		monster = new JComboBox(new Object[]{"Hareeny", "Chair"});
-		levels = new JComboBox(new Object[]{"floor1"});
+		levels = new JComboBox(new Object[]{"floor1", "floor2"});
 		gameSettingsPanel = new JPanel(new GridLayout(2, 2));
 		gameSettingsPanel.add(new JLabel("Your Monster"));
 		gameSettingsPanel.add(new JLabel("The Level"));
@@ -107,7 +134,7 @@ public class Launcher {
 		
 		buttonPanel = new JPanel(new GridLayout(2, 2));
 		buttonPanel.add(start);
-		buttonPanel.add(settings);
+		buttonPanel.add(help);
 		buttonPanel.add(source);
 		buttonPanel.add(exit);
 		
@@ -131,7 +158,7 @@ public class Launcher {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
-		settingsPanel.setVisible(false);
+//		settingsPanel.setVisible(false);
 		frame.getRootPane().setDefaultButton(start);
 		
 	}
@@ -169,15 +196,27 @@ public class Launcher {
 			if (source.getText().equalsIgnoreCase("exit")) {
 				System.exit(0);
 			}else if (source.getText().equalsIgnoreCase("launch")) {
-//				JOptionPane.showMessageDialog(frame, "To change your monster, level, or settings - quit the game/launcher and run the game again.");
+//				JOptionPane.showMessageDialog(frame, "To change your monster, level, or help - quit the game/launcher and run the game again.");
 				updateSettings();
 				YouAreTheMonster.main(Launcher.args);
 //				frame.dispose();
 			}else if (source.getText().equalsIgnoreCase("view source")) {
 				openSource();
-			}else if (source.getText().equalsIgnoreCase("settings")) {
-//				TODO: screen settings
-				settingsPanel.setVisible(!settingsPanel.isVisible());
+			}else if (source.getText().equalsIgnoreCase("README")) {
+				try {
+					InputStream in = Launcher.class.getResourceAsStream("/help.txt");
+					BufferedReader r = new BufferedReader(new InputStreamReader(in));
+					String text = "";
+					String line;
+					while ((line = r.readLine()) != null) {
+						text += line + "\n";
+					}
+					new TextAreaWindow("Info", text, new Dimension(360, (360 / 16) * 9), frame);
+					r.close();
+				}catch (IOException e1) {
+					JOptionPane.showMessageDialog(frame, "Error showing help message");
+					e1.printStackTrace();
+				}
 			}
 		}
 	}

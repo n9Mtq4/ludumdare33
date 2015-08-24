@@ -44,11 +44,6 @@ public class Mob extends Entity {
 	}
 	
 	@Override
-	public void init(Level level) {
-		super.init(level);
-	}
-	
-	@Override
 	public void render(Screen screen) {
 		renderSpriteRel(screen, sprite);
 	}

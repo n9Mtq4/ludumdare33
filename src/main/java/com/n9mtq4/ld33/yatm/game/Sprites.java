@@ -48,6 +48,7 @@ public class Sprites {
 	public static final Sprite water = new Sprite(Screen.ABS_TILE_SIZE, 7, 1, tiles);
 	public static final Sprite tile = new Sprite(Screen.ABS_TILE_SIZE, 5, 0, tiles);
 	
+	public static final AnimatedSprite sleeper1 = getAnimatedSprite(7, 0, 3, Screen.ABS_TILE_SIZE, mobs, 60);
 	public static final Sprite guard1 = new Sprite(Screen.ABS_TILE_SIZE, 0, 0, mobs);
 	public static final Sprite guard2 = new Sprite(Screen.ABS_TILE_SIZE, 1, 0, mobs);
 	
@@ -63,7 +64,7 @@ public class Sprites {
 	public static final AnimatedSprite monster1l = getAnimatedSprite(2, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1r = getAnimatedSprite(3, 0, 2, Screen.ABS_TILE_SIZE, monsters, 60);
 	
-	public static final AnimatedSprite monster1ib = getAnimatedSprite(0, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
+	public static final AnimatedSprite monster1ib = getAnimatedSprite(0, 2, 4, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1if = getAnimatedSprite(1, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1il = getAnimatedSprite(2, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);
 	public static final AnimatedSprite monster1ir = getAnimatedSprite(3, 2, 3, Screen.ABS_TILE_SIZE, monsters, 60);

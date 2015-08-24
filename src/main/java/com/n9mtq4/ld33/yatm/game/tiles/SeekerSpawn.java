@@ -13,13 +13,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.game.tiles;
+
+import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.game.mob.SeekerMob;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/21/15 at 9:07 PM.
+ * Created by will on 8/23/15 at 1:25 PM.
  */
-public enum Progress {
+public class SeekerSpawn extends Tile {
 	
-	MAIN_MENU, IN_GAME, CUT_SCENE, GAME_LOST, GAME_WON;
+	public SeekerSpawn() {
+		super(Sprites.carpetTan);
+	}
+	
+	@Override
+	public Entity newSpawn(int x, int y) {
+		return new SeekerMob(x, y);
+	}
 	
 }

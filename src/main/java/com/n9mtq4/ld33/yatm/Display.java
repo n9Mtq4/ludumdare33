@@ -15,17 +15,17 @@
 
 package com.n9mtq4.ld33.yatm;
 
-import com.n9mtq4.ld33.yatm.audio.SoundManager;
-import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.game.Progress;
+import com.n9mtq4.ld33.yatm.game.YouAreTheMonster;
 import com.n9mtq4.ld33.yatm.game.level.House;
 import com.n9mtq4.ld33.yatm.game.mob.Monster;
 import com.n9mtq4.ld33.yatm.game.mob.MonsterPlayer;
-import com.n9mtq4.ld33.yatm.game.mob.SeekerMob;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.hud.Hud;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
+import com.n9mtq4.ld33.yatm.launcher.TextAreaWindow;
 import com.n9mtq4.ld33.yatm.level.Level;
+import com.n9mtq4.ld33.yatm.sound.SoundManager;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
@@ -37,6 +37,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 
 /**
@@ -53,6 +55,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	public static Monster monsterType = Monster.GREEN_BLOB;
 	public static String levelName = "floor1";
 	
+	private YouAreTheMonster parent;
 	private Thread thread;
 	private boolean running;
 	private int fps;
@@ -71,9 +74,11 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
-	public Display() {
+	public Display(YouAreTheMonster parent) {
 		//noinspection ConstantConditions
-		this.progress = DEBUG ? Progress.IN_GAME : Progress.MAIN_MENU;
+		this.parent = parent;
+//		this.progress = DEBUG ? Progress.IN_GAME : Progress.MAIN_MENU;
+		this.progress = Progress.IN_GAME;
 		Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 		setPreferredSize(size);
 		this.screen = new Screen(WIDTH, HEIGHT);
@@ -85,53 +90,43 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		hud = new Hud();
 		
-		player = new MonsterPlayer(32, 2, this, keyBoard, monsterType);
+		player = new MonsterPlayer(32, 2, keyBoard, monsterType);
 		level = new House(levelName);
+		level.display = this;
 		level.add(player);
 		level.load();
-		
-		SeekerMob a = new SeekerMob(32, 3);
-		level.add(a);
 		
 		requestFocus();
 		
 	}
 	
-	public void playSound(String sound) {
+	public Clip playSound(String sound) {
 		try {
-			soundManager.playSound(sounds.get(sound));
+			return soundManager.playSound(sounds.get(sound));
 		}catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public void playMusic() {
 		if (musicPlaying) return;
-		try {
-			music = soundManager.playSound(sounds.get("music1"));
-			music.loop(Clip.LOOP_CONTINUOUSLY);
-			musicPlaying = true;
-		}catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		}catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}
+		music = playSound("music");
+		music.loop(Clip.LOOP_CONTINUOUSLY);
+		musicPlaying = true;
 	}
 	
 	public void stopMusic() {
 		if (!musicPlaying) return;
 		musicPlaying = false;
-		if (music != null) music.stop();
+		music.stop();
 	}
 	
-	private void initSound() {
+	private void addSound(String name) {
 		try {
-			sounds.put("vrrm", soundManager.addClip("/sound/vrrm.wav"));
-			sounds.put("whoosh", soundManager.addClip("/sound/whoosh.wav"));
-			sounds.put("wish", soundManager.addClip("/sound/wish.wav"));
-			sounds.put("music1", soundManager.addClip("/sound/music.wav"));
+			sounds.put(name, soundManager.addClip("/sound/" + name + ".wav"));
 		}catch (IOException e) {
 			e.printStackTrace();
 		}catch (UnsupportedAudioFileException e) {
@@ -139,6 +134,19 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		}catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void initSound() {
+		
+		addSound("vrrm");
+		addSound("whoosh");
+		addSound("wish");
+		addSound("error");
+		addSound("roar");
+		addSound("scream1");
+		addSound("caught");
+		addSound("music");
+		
 	}
 	
 	private void initListeners() {
@@ -171,6 +179,27 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 	}
 	
+	public void gameLoose() {
+		playSound("caught");
+		progress = Progress.GAME_LOST;
+	}
+	
+	public void gameWin() {
+		playSound("roar");
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(700);
+				}catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				playSound("scream1");
+				progress = Progress.GAME_WON;
+			}
+		}).start();
+	}
+	
 	public void customCursor(String path, String name, int x, int y) {
 		try {
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -182,11 +211,60 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		}
 	}
 	
-	public void renderGameOver() {
+	public void renderGameLost() {
+		
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		
+		screen.clear();
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Verdana", Font.BOLD, 24));
+		g.drawString("You Lost!", ((WIDTH * SCALE) / 2) - 40, 50);
+		g.setFont(new Font("Verdana", Font.BOLD, 20));
+		g.drawString("Try again or change level / monster!", ((WIDTH * SCALE) / 2) - 200, 100);
+		g.drawString("Push space to restart the level, or close the window", ((WIDTH * SCALE) / 2) - 300, 140);
+		g.drawString("and change settings in the launcher and start again.", ((WIDTH * SCALE) / 2) - 300, 180);
+		
+		g.dispose();
+		bs.show();
 		
 	}
 	
-	public void renderMenu() {
+	public void renderGameWon() {
+		
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		
+		screen.clear();
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Verdana", Font.BOLD, 24));
+		g.drawString("You Win!", ((WIDTH * SCALE) / 2) - 40, 50);
+		g.setFont(new Font("Verdana", Font.BOLD, 20));
+		g.drawString("Try your luck on another level with a different monster", ((WIDTH * SCALE) / 2) - 300, 100);
+		g.drawString("Push space to return to the launcher.", ((WIDTH * SCALE) / 2) - 300, 140);
+		
+		g.dispose();
+		bs.show();
+		
+//		stop();
 		
 	}
 	
@@ -210,7 +288,7 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		if (DEBUG) {
 			g.setColor(new Color(255, 255, 0));
 			g.setFont(new Font("Verdana", Font.BOLD, 24));
-			g.drawString(String.valueOf(fps + " fps"), 0, HEIGHT - 18);
+			g.drawString(String.valueOf(fps + " fps | ability: " + player.ability), 0, HEIGHT * SCALE - 18);
 			g.setFont(new Font("Verdana", Font.BOLD, 12));
 		}
 		
@@ -222,24 +300,23 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 		
 		if (progress.equals(Progress.IN_GAME)) {
 			renderGame();
-		}else if (progress.equals(Progress.GAME_OVER)) {
-			renderGameOver();
-		}else if (progress.equals(Progress.CUT_SCENE)) {
-//			TODO: render cut scene
-		}else if (progress.equals(Progress.MAIN_MENU)) {
-			renderMenu();
+		}else if (progress.equals(Progress.GAME_LOST)) {
+			renderGameLost();
+		}else if (progress.equals(Progress.GAME_WON)) {
+			renderGameWon();
 		}
 		
 	}
 	
 	public void tick() {
 		
-		keyBoard.update();
-		level.tick();
-		hud.tick(player);
+		if (progress == Progress.IN_GAME) {
+			keyBoard.update();
+			level.tick();
+			hud.tick(player);
+		}
 //		too slow, so light map can't be dynamic
 //		level.updateLightMap();
-		
 	}
 	
 	private void initBuffer() {
@@ -355,9 +432,15 @@ public class Display extends Canvas implements Runnable, MouseListener, MouseMot
 				this.playMusic();
 			}
 		}else if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
-			player.changeMonster();
+//			player.changeMonster();
 		}else if (keyEvent.getKeyCode() == KeyEvent.VK_E) {
 			player.ability();
+		}else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (progress == Progress.GAME_WON) {
+				parent.dispose();
+			}else if (progress == Progress.GAME_LOST) {
+				parent.restart();
+			}
 		}
 	}
 }

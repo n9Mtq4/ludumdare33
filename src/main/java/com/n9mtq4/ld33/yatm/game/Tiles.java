@@ -17,6 +17,7 @@ package com.n9mtq4.ld33.yatm.game;
 
 import com.n9mtq4.ld33.yatm.game.tiles.*;
 import com.n9mtq4.ld33.yatm.level.Tile;
+import com.n9mtq4.ld33.yatm.level.tile.SolidTile;
 import com.n9mtq4.ld33.yatm.level.tile.VoidTile;
 
 /**
@@ -42,5 +43,7 @@ public class Tiles {
 	public static final Tile water = new SolidTile(Sprites.water);
 	public static final Tile tile = new Tile(Sprites.tile);
 	public static final SeekerBarrierTile seekerBarrier = new SeekerBarrierTile();
+	public static final SeekerSpawn seekerSpawn = new SeekerSpawn();
+	public static final SleeperSpawn sleeperSpawn = new SleeperSpawn();
 	
 }

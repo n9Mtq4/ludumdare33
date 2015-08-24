@@ -15,6 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.level;
 
+import com.n9mtq4.ld33.yatm.Display;
 import com.n9mtq4.ld33.yatm.entity.Entity;
 import com.n9mtq4.ld33.yatm.entity.Light;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
@@ -38,6 +39,7 @@ public class Level {
 	public double darkness = 0.2d;
 	public double ambientLight = 0.16d;
 	private String path;
+	public Display display;
 	
 	public List<Entity> entities = new ArrayList<Entity>();
 	
@@ -54,7 +56,7 @@ public class Level {
 	}
 	
 	public void add(Entity entity) {
-		entity.init(this);
+		entity.init(this, display);
 		entities.add(entity);
 	}
 	
@@ -145,6 +147,19 @@ public class Level {
 		loadLevel(path);
 	}
 	
+	public void spawnMobs() {
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				Entity e = getTile(x, y).newSpawn(x, y);
+				if (e != null) {
+					add(e);
+				}
+			}
+		}
+		
+	}
+	
 	public void loadLevel(String path) {
 		
 		try {
@@ -156,6 +171,7 @@ public class Level {
 			lightMap = new double[width * height];
 			i.getRGB(0, 0, width, height, tiles, 0, width);
 			generateLightMap();
+			spawnMobs();
 			
 		}catch (Exception e) {
 			e.printStackTrace();

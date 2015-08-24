@@ -20,7 +20,7 @@ package com.n9mtq4.ld33.yatm.game.mob;
  */
 public enum MonsterAbility {
 	
-	INVIBILITY(60 * 10, 60 * 40), 
+	INVISIBILITY(60 * 10, 60 * 60), 
 	SPEED(60 * 10, 60 * 40);
 	
 	private int time;
@@ -37,6 +37,14 @@ public enum MonsterAbility {
 	
 	public int getCooldown() {
 		return cooldown;
+	}
+	
+	
+	@Override
+	public String toString() {
+		if (this == INVISIBILITY) return "Invisibility";
+		if (this == SPEED) return "Speed";
+		return "Not defined";
 	}
 	
 }

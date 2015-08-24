@@ -15,8 +15,6 @@
 
 package com.n9mtq4.ld33.yatm.entity.mob;
 
-import com.n9mtq4.ld33.yatm.Display;
-import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
 /**
@@ -24,16 +22,14 @@ import com.n9mtq4.ld33.yatm.input.KeyBoard;
  */
 public class Player extends AnimatedMob {
 	
-	public Display display;
 	protected int speed = 2;
 	
 	protected KeyBoard keyBoard;
 	
-	public Player(int x, int y, Display display, KeyBoard keyBoard) {
+	public Player(int x, int y, KeyBoard keyBoard) {
 		super(x, y);
 //		this.x = x;
 //		this.y = y;
-		this.display = display;
 		this.keyBoard = keyBoard;
 	}
 	

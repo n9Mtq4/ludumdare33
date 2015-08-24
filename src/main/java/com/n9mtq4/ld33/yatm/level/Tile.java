@@ -38,6 +38,10 @@ public class Tile {
 		screen.renderTile(x << Screen.TILE_SIZE, y << Screen.TILE_SIZE, x, y, this, level);
 	}
 	
+	public Entity newSpawn(int x, int y) {
+		return null;
+	}
+	
 	public void mobIn(Mob mob) {
 		
 	}

@@ -26,12 +26,23 @@ import java.awt.event.WindowListener;
  */
 public class YouAreTheMonster {
 	
+	private static String[] args;
+	
 	public static void main(String[] args) {
 		
-		JFrame frame = new JFrame("Game");
+		YouAreTheMonster.args = args;
+		new YouAreTheMonster();
+		
+	}
+	
+	private JFrame frame;
+	private Display game;
+	
+	public YouAreTheMonster() {
+		frame = new JFrame("n9Mtq4 | LD33 | TAHC");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		Display game = new Display();
+		game = new Display(this);
 		
 		frame.add(game);
 		
@@ -40,18 +51,26 @@ public class YouAreTheMonster {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		frame.addWindowListener(new WinListener(game));
+		frame.addWindowListener(new WinListener());
 		game.start();
-		
 	}
 	
-	public static class WinListener implements WindowListener {
-		
-		private Display game;
-		
-		public WinListener(Display game) {
-			this.game = game;
-		}
+	public void dispose() {
+		game.stop();
+	}
+	
+	public void restart() {
+//		dispose();
+		game.stop();
+		frame.remove(game);
+		this.game = new Display(this);
+		frame.add(game);
+		frame.pack();
+		game.start();
+//		main(YouAreTheMonster.args);
+	}
+	
+	public class WinListener implements WindowListener {
 		
 		@Override
 		public void windowOpened(WindowEvent e) {
@@ -65,7 +84,7 @@ public class YouAreTheMonster {
 		
 		@Override
 		public void windowClosed(WindowEvent e) {
-			game.stop();
+			dispose();
 		}
 		
 		@Override

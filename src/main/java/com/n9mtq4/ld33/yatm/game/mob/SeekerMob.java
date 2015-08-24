@@ -29,6 +29,7 @@ public class SeekerMob extends Mob {
 	private static final Random RANDOM = new Random();
 	private static final Sprite[] sprites = {Sprites.guard1, Sprites.guard2};
 	
+	private int speed = 1;
 	private MonsterPlayer lockedOnto;
 	
 	public SeekerMob(int x, int y) {
@@ -41,10 +42,16 @@ public class SeekerMob extends Mob {
 		super.tick();
 		if (lockedOnto == null) lockedOnto = (MonsterPlayer) level.getPlayer();
 		if (canSee(lockedOnto)) {
-			chaiserAi();
+			chaserAi();
 		}else {
 			randomMovementAi();
 		}
+		checkOnPlayer();
+	}
+	
+	public void checkOnPlayer() {
+		int distance = getDistance(lockedOnto, this);
+		if (distance <= 0 && !lockedOnto.invisible) display.gameLoose();
 	}
 	
 	public void randomMovementAi() {
@@ -59,21 +66,23 @@ public class SeekerMob extends Mob {
 		move(xd, yd);
 	}
 	
-	public void chaiserAi() {
+	public void chaserAi() {
 		int xd = 0;
 		int yd = 0;
-		if (x > lockedOnto.x) xd--;
-		if (x < lockedOnto.x) xd++;
-		if (y > lockedOnto.y) yd--;
-		if (y < lockedOnto.y) yd++;
+		if (x > lockedOnto.x) xd -= speed;
+		if (x < lockedOnto.x) xd += speed;
+		if (y > lockedOnto.y) yd -= speed;
+		if (y < lockedOnto.y) yd += speed;
 		move(xd, yd);
 	}
 	
 	private boolean canSee(MonsterPlayer player) {
 		if (player.invisible) return false;
 		int d = getDistance(player, this);
-		if (d <= 2) return true;
-		if (d <= 5) if (player.getLightLevel() > 0.4d) return true;
+		if (d <= 1) return true;
+		double lightLevel = player.getLightLevel();
+		if (d <= 2) if (lightLevel > 0.4) return true;
+		if (d <= 5) if (player.getLightLevel() > 0.6d) return true;
 		return false;
 	}
 	

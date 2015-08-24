@@ -16,6 +16,7 @@
 package com.n9mtq4.ld33.yatm.game.tiles;
 
 import com.n9mtq4.ld33.yatm.game.Sprites;
+import com.n9mtq4.ld33.yatm.level.tile.SolidTile;
 
 /**
  * Created by will on 8/22/15 at 1:46 PM.

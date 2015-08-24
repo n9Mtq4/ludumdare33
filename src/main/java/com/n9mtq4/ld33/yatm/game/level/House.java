@@ -55,7 +55,8 @@ public class House extends Level {
 		if (tiles[x + y * width] == 0xfffefffe) return Tiles.whiteBedTile;
 		if (tiles[x + y * width] == 0xff0b0000) return Tiles.water;
 		if (tiles[x + y * width] == 0xff0c0000) return Tiles.tile;
-		if (tiles[x + y * width] == 0xff640064) spawnMob(x, y);
+		if (tiles[x + y * width] == 0xff640064) return Tiles.seekerSpawn;
+		if (tiles[x + y * width] == 0xffc800c8) return Tiles.sleeperSpawn;
 		
 //		return Tiles.voidTile;
 		return new Tile(new Sprite(Screen.ABS_TILE_SIZE, new Color(tiles[x + y * width])));

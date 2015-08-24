@@ -13,13 +13,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game;
+package com.n9mtq4.ld33.yatm.level.tile;
+
+import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.graphics.Sprite;
+import com.n9mtq4.ld33.yatm.level.Tile;
 
 /**
- * Created by will on 8/21/15 at 9:07 PM.
+ * Created by will on 8/22/15 at 9:57 PM.
  */
-public enum Progress {
+public class SolidTile extends Tile {
 	
-	MAIN_MENU, IN_GAME, CUT_SCENE, GAME_LOST, GAME_WON;
+	public SolidTile(Sprite sprite) {
+		super(sprite);
+	}
+	
+	@Override
+	public boolean isSolid(Entity entity) {
+		return true;
+	}
 	
 }

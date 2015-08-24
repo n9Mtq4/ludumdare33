@@ -15,7 +15,6 @@
 
 package com.n9mtq4.ld33.yatm.game.mob;
 
-import com.n9mtq4.ld33.yatm.Display;
 import com.n9mtq4.ld33.yatm.entity.mob.Player;
 import com.n9mtq4.ld33.yatm.input.KeyBoard;
 
@@ -36,9 +35,10 @@ public class MonsterPlayer extends Player {
 	public int time = 0;
 	public boolean invisible = false;
 	public boolean disabled = true;
+	public boolean hasBeenInBed = false;
 	
-	public MonsterPlayer(int x, int y, Display display, KeyBoard keyBoard, Monster type) {
-		super(x, y, display, keyBoard);
+	public MonsterPlayer(int x, int y, KeyBoard keyBoard, Monster type) {
+		super(x, y, keyBoard);
 		this.type = type;
 		initMonster();
 	}
@@ -55,14 +55,17 @@ public class MonsterPlayer extends Player {
 	private void initMonster() {
 		
 		setSprites(type);
-		if (type == Monster.GREEN_BLOB) ability = MonsterAbility.INVIBILITY;
+		if (type == Monster.GREEN_BLOB) ability = MonsterAbility.INVISIBILITY;
 		if (type == Monster.FLYING) ability = MonsterAbility.SPEED;
 		cooldownTime = ability.getCooldown() / 2;
 		
 	}
 	
 	public void ability() {
-		if (cooldownTime < ability.getCooldown()) return;
+		if (cooldownTime < ability.getCooldown()) {
+			display.playSound("error");
+			return;
+		}
 		notAbility = false;
 		disabled = false;
 		cooldownTime = 0;
@@ -70,7 +73,7 @@ public class MonsterPlayer extends Player {
 		if (ability == MonsterAbility.SPEED) {
 			speed *= SPEED_MULTIPLE;
 			display.playSound("vrrm");
-		}else if (ability == MonsterAbility.INVIBILITY) {
+		}else if (ability == MonsterAbility.INVISIBILITY) {
 			setSprites(Monster.INVISIBLE_BLOB);
 			invisible = true;
 			display.playSound("wish");
@@ -83,7 +86,7 @@ public class MonsterPlayer extends Player {
 		notAbility = true;
 		if (ability == MonsterAbility.SPEED) {
 			speed /= SPEED_MULTIPLE;
-		}else if (ability == MonsterAbility.INVIBILITY) {
+		}else if (ability == MonsterAbility.INVISIBILITY) {
 			setSprites(Monster.GREEN_BLOB);
 			invisible = false;
 			display.playSound("whoosh");
@@ -91,8 +94,10 @@ public class MonsterPlayer extends Player {
 	}
 	
 	public void inBed() {
-//		TODO: win condition
-		System.out.println("IN BED");
+//		win condition
+		if (hasBeenInBed) return;
+		hasBeenInBed = true;
+		display.gameWin();
 	}
 	
 	@Deprecated
@@ -103,13 +108,14 @@ public class MonsterPlayer extends Player {
 		}else if (type.equals(Monster.FLYING)) {
 			this.type = Monster.GREEN_BLOB;
 		}
-		try {
+/*		try {
 			display.soundManager.playSound(display.sounds.get("wish"));
 		}catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}catch (LineUnavailableException e) {
 			e.printStackTrace();
-		}
+		}*/
+		display.playSound("wish");
 		initMonster();
 	}
 	

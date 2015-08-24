@@ -8,10 +8,12 @@ repositories {
     mavenCentral()
 }
 
-//TODO: change the main class to com.n9mtq4.ld33.yatm.launcher.Launcher
+//com.n9mtq4.ld33.yatm.launcher.Launcher
+//com.n9mtq4.ld33.yatm.game.YouAreTheMonster
 jar {
     manifest {
-        attributes 'Main-Class': 'com.n9mtq4.ld33.yatm.game.YouAreTheMonster'
+        attributes 'Main-Class': 'com.n9mtq4.ld33.yatm.launcher.Launcher'
+//        attributes 'Main-Class': 'com.n9mtq4.ld33.yatm.game.YouAreTheMonster'
     }
 }
 

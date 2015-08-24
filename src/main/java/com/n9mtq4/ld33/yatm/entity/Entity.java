@@ -15,6 +15,7 @@
 
 package com.n9mtq4.ld33.yatm.entity;
 
+import com.n9mtq4.ld33.yatm.Display;
 import com.n9mtq4.ld33.yatm.graphics.Screen;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
 import com.n9mtq4.ld33.yatm.level.Level;
@@ -28,10 +29,12 @@ public abstract class Entity {
 	public int y;
 	public boolean removed = false;
 	public Level level;
+	public Display display;
 	protected Sprite sprite;
 	
-	public void init(Level level) {
+	public void init(Level level, Display display) {
 		this.level = level;
+		this.display = display;
 	}
 	
 	public void render(Screen screen) {

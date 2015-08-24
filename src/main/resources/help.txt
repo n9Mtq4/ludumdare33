@@ -1,0 +1,21 @@
+The Adventures of Hareeny and Chair
+by: n9Mtq4
+
+About:
+You are a monster who has been instructed to
+go into a spoiled child's house and scare him or her.
+Being spoiled, the child has hired guards to catch
+scary monsters. Your goal is to navigate and search
+the house for the child sleeping in their bed,
+while avoiding guards.
+
+Controls:
+WASD or arrow keys to move
+E to use monsters ability
+M to toggle music
+
+Tips:
+ - The guards don't like monsters, but the dislike being
+   fired more. They wont stray far from their post.
+ - The guards can't see well in the dark. Use it to your
+   advantage

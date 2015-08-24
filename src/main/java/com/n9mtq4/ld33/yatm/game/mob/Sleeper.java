@@ -13,24 +13,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.n9mtq4.ld33.yatm.game.tiles;
+package com.n9mtq4.ld33.yatm.game.mob;
 
-import com.n9mtq4.ld33.yatm.entity.Entity;
+import com.n9mtq4.ld33.yatm.entity.mob.Mob;
+import com.n9mtq4.ld33.yatm.game.Sprites;
 import com.n9mtq4.ld33.yatm.graphics.Sprite;
-import com.n9mtq4.ld33.yatm.level.Tile;
+
+import java.util.Random;
 
 /**
- * Created by will on 8/22/15 at 9:57 PM.
+ * Created by will on 8/23/15 at 1:14 PM.
  */
-public class SolidTile extends Tile {
+public class Sleeper extends Mob {
 	
-	public SolidTile(Sprite sprite) {
-		super(sprite);
+	private static final Random RANDOM = new Random();
+	private static final Sprite[] sprites = {Sprites.sleeper1};
+	
+	public Sleeper(int x, int y) {
+		super(x, y);
+		sprite = sprites[RANDOM.nextInt(sprites.length)];
 	}
 	
 	@Override
-	public boolean isSolid(Entity entity) {
-		return true;
+	public void tick() {
+		sprite.tick();
 	}
 	
 }
